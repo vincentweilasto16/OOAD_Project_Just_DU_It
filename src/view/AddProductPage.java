@@ -34,22 +34,9 @@ public class AddProductPage extends JFrame {
 	JScrollPane areaPane;
 	
 	JFrame frame;
-	
-//	public void desktopPane() {
-//		desktopPane = new JDesktopPane();
-//		internalFrame = new JInternalFrame();
-//		internalFrame.setSize(500, 400);
-//		internalFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-//		internalFrame.setLocation((800 - 500)/2, (600 - 400)/2);
-//		internalFrame.setResizable(false);
-//		internalFrame.setClosable(true);
-//		internalFrame.setVisible(true);
-//	}
 
 	public AddProductPage() {
 		frame = this;
-		
-//		desktopPane();
 		
 		mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -88,15 +75,11 @@ public class AddProductPage extends JFrame {
 		southPanel.add(addBtn);
 		southPanel.add(cancelBtn);
 		
-		//add components
+		
 		mainPanel.add(northPanel, BorderLayout.NORTH);
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
 		mainPanel.add(southPanel, BorderLayout.SOUTH);
 		
-//		internalFrame.add(mainPanel);
-//		
-//		desktopPane.add(internalFrame);
-//		add(desktopPane);
 		
 		add(mainPanel);
 		
@@ -145,12 +128,12 @@ public class AddProductPage extends JFrame {
 		else {
 			count++;
 			if(isNumeric(priceTxt.getText()) == false) {
-				JOptionPane.showMessageDialog(frame, "Price be numeric");
+				JOptionPane.showMessageDialog(frame, "Price must be numeric");
 			}
 			else {
 				count++;
 				if(price <= 0) {
-					JOptionPane.showMessageDialog(frame, "Price above zero");
+					JOptionPane.showMessageDialog(frame, "Price must above zero");
 				}
 				else {
 					count++;
@@ -163,12 +146,12 @@ public class AddProductPage extends JFrame {
 		else {
 			count++;
 			if(isNumeric(stockTxt.getText()) == false) {
-				JOptionPane.showMessageDialog(frame, "Stock be numeric");
+				JOptionPane.showMessageDialog(frame, "Stock must be numeric");
 			}
 			else {
 				count++;
 				if(stock <= 0) {
-					JOptionPane.showMessageDialog(frame, "Stock above zero");
+					JOptionPane.showMessageDialog(frame, "Stock must above zero");
 				}
 				else {
 					count++;
