@@ -143,7 +143,7 @@ public class LoginPage extends JFrame {
 				ResultSet rs = ps.getResultSet();
 				
 				if(rs.next()) {
-					Main.employee = new Employee(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString(username), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
+					Main.employee = new Employee(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString("username"), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
 					if(Main.employee.getRoleId() == 1){
 						new CashierPage();
 						this.dispose();
