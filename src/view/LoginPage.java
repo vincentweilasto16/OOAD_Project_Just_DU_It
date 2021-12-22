@@ -95,8 +95,6 @@ public class LoginPage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				login();
-//				new ProductManagementPage();
-//				frame.dispose();
 			}
 		});
 		
