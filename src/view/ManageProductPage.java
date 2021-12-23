@@ -11,9 +11,14 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ProductController;
+import models.ProductModel;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 public class ManageProductPage implements ActionListener {
@@ -22,7 +27,7 @@ public class ManageProductPage implements ActionListener {
 	private JLabel titleLbl, idLbl, nameLbl, descriptionLbl, priceLbl, stockLbl;
 	private JTextField idTxt, nameTxt, descriptionTxt, priceTxt, stockTxt;
 	private JButton btnUpdate, btnDelete, btnAddProduct, btnLogout;
-//	private DefaultTableModel dtm;
+	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
 	private JTable table;
 
@@ -49,16 +54,50 @@ public class ManageProductPage implements ActionListener {
 		titleLbl.setBounds(376, 34, 91, 16);
 		frame.getContentPane().add(titleLbl);
 		
-//		Object [] header = new Object[] {"id", "name", "description", "price", "stock"};
-//		Object [][] data = new Object[][] {};
-//		
-//		dtm = new DefaultTableModel(data, header) {
-//			@Override
-//			public boolean isCellEditable(int row, int column) {
-//				return false;
-//			}
-//		};
-//		table = new JTable(dtm);
+		Object [] header = new Object[] {"ID", "Name", "Description", "Price", "Stock"};
+		Object [][] data = new Object[][] {};
+		
+		dtm = new DefaultTableModel(data, header) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		
+		table = new JTable(dtm);
+		table.setRowHeight(30);
+		
+		Vector<ProductModel> products = ProductController.getInstance().getAllProduct();
+		for (ProductModel productModel : products) {
+			Vector<Object> row = new Vector<>();
+			row.add(productModel.getId());
+			row.add(productModel.getName());
+			row.add(productModel.getDescription());
+			row.add(productModel.getPrice());
+			row.add(productModel.getStock());
+			dtm.addRow(row);
+		}
+		
+		table.setModel(dtm);
+		scrollPane = new JScrollPane(table);
+		frame.getContentPane().add(scrollPane);
+		
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int selectedIndex = table.getSelectedRow();
+				String id = dtm.getValueAt(selectedIndex, 0).toString();
+				String name = dtm.getValueAt(selectedIndex, 1).toString();
+				String description = dtm.getValueAt(selectedIndex, 2).toString();
+				String price = dtm.getValueAt(selectedIndex, 3).toString();
+				String stock = dtm.getValueAt(selectedIndex, 4).toString();
+				
+				idTxt.setText(id);
+				nameTxt.setText(name);
+				descriptionTxt.setText(description);
+				priceTxt.setText(price);
+				stockTxt.setText(stock);
+			}
+		});
 
 		
 		idLbl = new JLabel("ID");
@@ -131,31 +170,29 @@ public class ManageProductPage implements ActionListener {
 		scrollPane.setBounds(47, 91, 703, 221);
 		frame.getContentPane().add(scrollPane);
 		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				
-			},
-			new String[] {
-				"ID", "Name", "Description", "Price", "Stock"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		scrollPane.setViewportView(table);
-		
-//		ProductController.getInstance().getAllProduct();
+//		table = new JTable();
+//		table.setModel(new DefaultTableModel(
+//			new Object[][] {
+//				
+//			},
+//			new String[] {
+//				"ID", "Name", "Description", "Price", "Stock"
+//			}
+//		) {
+//			Class[] columnTypes = new Class[] {
+//				String.class, String.class, String.class, String.class, String.class
+//			};
+//			public Class getColumnClass(int columnIndex) {
+//				return columnTypes[columnIndex];
+//			}
+//			boolean[] columnEditables = new boolean[] {
+//				false, false, false, false, false
+//			};
+//			public boolean isCellEditable(int row, int column) {
+//				return columnEditables[column];
+//			}
+//		});
+//		scrollPane.setViewportView(table);
 		
 	}
 	

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Vector;
+
 import models.ProductModel;
 import view.AddProductPage;
 import view.ManageProductPage;
@@ -174,12 +176,15 @@ public class ProductController {
 		
 		ProductModel productModel = new ProductModel();
 		productModel.deleteProduct(productId);
+		manageProductPage.showMessage("Product Has Been Deleted Successfully!");
+		viewManageProductPage();
 	}
 	
-//	public void getAllProduct() {
-//		
-//		ProductModel productModel = new ProductModel();
-//		productModel.getAllProduct();
-//	}
+	public Vector<ProductModel> getAllProduct() {
+		
+		ProductModel productModel = new ProductModel();
+		return productModel.getAllProduct();
+
+	}
 
 }
