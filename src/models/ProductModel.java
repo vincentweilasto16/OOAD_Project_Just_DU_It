@@ -93,10 +93,15 @@ public class ProductModel {
 				ProductModel product = map(rs);
 				products.add(product);
 			}
+//			for (ProductModel p : products) {
+//				System.out.println(p.getName());
+//			}
 			return products;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		
 		return null;
 	}
 	

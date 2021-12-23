@@ -54,9 +54,20 @@ public class ManageProductPage implements ActionListener {
 		titleLbl.setBounds(376, 34, 91, 16);
 		frame.getContentPane().add(titleLbl);
 		
-		Object [] header = new Object[] {"ID", "Name", "Description", "Price", "Stock"};
-		Object [][] data = new Object[][] {};
+		Vector<ProductModel> products = ProductController.getInstance().getAllProduct();
 		
+		Object [] header = new Object[] {"ID", "Name", "Description", "Price", "Stock"};
+		Object [][] data = new Object[products.size()][5];
+		
+		for (int i = 0; i < products.size(); i++) {
+			data[i][0] = products.get(i).getId();
+			data[i][1] = products.get(i).getName();
+			data[i][2] = products.get(i).getDescription();
+			data[i][3] = products.get(i).getPrice();
+			data[i][4] = products.get(i).getStock();
+		}
+		
+			
 		dtm = new DefaultTableModel(data, header) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -67,17 +78,19 @@ public class ManageProductPage implements ActionListener {
 		table = new JTable(dtm);
 		table.setRowHeight(30);
 		
-		Vector<ProductModel> products = ProductController.getInstance().getAllProduct();
-		for (ProductModel productModel : products) {
-			Vector<Object> row = new Vector<>();
-			row.add(productModel.getId());
-			row.add(productModel.getName());
-			row.add(productModel.getDescription());
-			row.add(productModel.getPrice());
-			row.add(productModel.getStock());
-			dtm.addRow(row);
-		}
 		
+		
+//		Vector<ProductModel> products = ProductController.getInstance().getAllProduct();
+//		for (ProductModel productModel : products) {
+//			Vector<Object> row = new Vector<>();
+//			row.add(productModel.getId());
+//			row.add(productModel.getName());
+//			row.add(productModel.getDescription());
+//			row.add(productModel.getPrice());
+//			row.add(productModel.getStock());
+//			dtm.addRow(row);
+//		}
+//		
 		table.setModel(dtm);
 		scrollPane = new JScrollPane(table);
 		frame.getContentPane().add(scrollPane);
@@ -192,7 +205,7 @@ public class ManageProductPage implements ActionListener {
 //				return columnEditables[column];
 //			}
 //		});
-//		scrollPane.setViewportView(table);
+		scrollPane.setViewportView(table);
 		
 	}
 	
