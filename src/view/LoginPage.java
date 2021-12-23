@@ -1,16 +1,10 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
@@ -23,16 +17,14 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import connect.Connect;
-import main.Main;
-import models.Employee;
+import controller.EmployeeController;
 
-public class LoginPage extends JFrame {
+public class LoginPage extends JFrame{
 	
 	JInternalFrame internalFrame;
 	JDesktopPane desktopPane;
 	JPanel mainPanel, northPanel, centerPanel, southPanel;
-	JLabel titleLbl, usernameLbl, passwordLbl, registerLbl;
+	JLabel titleLbl, usernameLbl, passwordLbl;
 	JTextField usernameTxt;
 	JPasswordField passwordTxt;
 	JButton loginBtn;
@@ -75,12 +67,8 @@ public class LoginPage extends JFrame {
 		centerPanel.add(passwordTxt);
 		
 		loginBtn = new JButton("Login");
-		registerLbl = new JLabel("Register");
-		registerLbl.setFont(new Font("Times New Roman", Font.ITALIC, 18));
-		registerLbl.setForeground(Color.BLUE);
 		southPanel.add(loginBtn);
-		southPanel.add(registerLbl);
-		
+
 		//add components
 		mainPanel.add(northPanel, BorderLayout.NORTH);
 		mainPanel.add(centerPanel, BorderLayout.CENTER);
@@ -94,26 +82,10 @@ public class LoginPage extends JFrame {
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				login();
-			}
-		});
-		
-		registerLbl.addMouseListener(new MouseListener() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new RegisterPage();
+				String username = usernameTxt.getText();
+				String password = new String(passwordTxt.getPassword());
+				
+				EmployeeController.getInstance().login(username, password);
 				frame.dispose();
 			}
 		});
@@ -122,51 +94,54 @@ public class LoginPage extends JFrame {
 		init();
 	}
 	
-	void login() {
-		String username = usernameTxt.getText();
-		String password = new String(passwordTxt.getPassword());
-		
-		if(username.equals("") || password.equals("")) {
-			JOptionPane.showMessageDialog(frame, "All field must not be empty!");
-		}
-		else {
-			Connect con = Connect.getInstance();
-			PreparedStatement ps = con.preparedStatement("SELECT * FROM employee WHERE username = ? AND password = ?");
-			
-			try {
-				ps.setString(1, username);
-				ps.setString(2, password);
-				ps.execute();
-				
-				ResultSet rs = ps.getResultSet();
-				
-				if(rs.next()) {
-					Main.employee = new Employee(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString("username"), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
-					if(Main.employee.getRoleId() == 1){
-						new CashierPage();
-						this.dispose();
-					}
-					else if(Main.employee.getRoleId() == 2){
-						new ProductManagementPage();
-						this.dispose();
-					}
-					else if(Main.employee.getRoleId() == 3){
-						new HumanResourceManagementPage();
-						this.dispose();
-					}
-					else if(Main.employee.getRoleId() == 4){
-						new ManagerPage();
-						this.dispose();
-					}
-				}
-				else {
-					JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public void showMessage(String message) {
+		JOptionPane.showMessageDialog(frame, message);
 	}
+	
+//	void login() {
+//		
+//		
+//		if(username.equals("") || password.equals("")) {
+//			JOptionPane.showMessageDialog(frame, "All field must not be empty!");
+//		}
+//		else {
+//			Connect con = Connect.getInstance();
+//			PreparedStatement ps = con.preparedStatement("SELECT * FROM employee WHERE username = ? AND password = ?");
+//			
+//			try {
+//				ps.setString(1, username);
+//				ps.setString(2, password);
+//				ps.execute();
+//				
+//				ResultSet rs = ps.getResultSet();
+//				
+//				if(rs.next()) {
+//					Main.employee = new EmployeeModel(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString("username"), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
+//					if(Main.employee.getRoleId() == 1){
+//						new CashierPage();
+//						this.dispose();
+//					}
+//					else if(Main.employee.getRoleId() == 2){
+//						new ProductManagementPage();
+//						this.dispose();
+//					}
+//					else if(Main.employee.getRoleId() == 3){
+//						new HumanResourceManagementPage();
+//						this.dispose();
+//					}
+//					else if(Main.employee.getRoleId() == 4){
+//						new ManagerPage();
+//						this.dispose();
+//					}
+//				}
+//				else {
+//					JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 	
 	void init() {
 		setSize(800, 600);

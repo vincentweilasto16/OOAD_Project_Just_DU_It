@@ -1,16 +1,16 @@
 package main;
 
-import models.Employee;
-import view.CashierPage;
-import view.LoginPage;
-import view.ProductManagementPage;
+import controller.EmployeeController;
+import models.EmployeeModel;
+
 
 public class Main {
 	
-	public static Employee employee = null;
+	public static EmployeeModel employee = null;
 
 	public Main() {
-		new LoginPage();
+//		new LoginPage();
+		EmployeeController.getInstance().viewLoginPage();
 	}
 
 	public static void main(String[] args) {
