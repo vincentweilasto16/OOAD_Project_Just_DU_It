@@ -38,6 +38,7 @@ public class ProductController {
 		
 		if(name.equals("") || name.isEmpty()) {
 			addProductPage.showMessage("Name must not empty");
+			viewAddProductPage();
 			return;
 		}
 		else {
@@ -45,6 +46,7 @@ public class ProductController {
 		}
 		if(description.equals("") || description.isEmpty()) {
 			addProductPage.showMessage("Description must not empty");
+			viewAddProductPage();
 			return;
 		}
 		else {
@@ -53,6 +55,7 @@ public class ProductController {
 		
 		if(price.isEmpty()) {
 			addProductPage.showMessage("Price must not empty");
+			viewAddProductPage();
 			return;
 		}
 		else {
@@ -62,6 +65,7 @@ public class ProductController {
 			        count++;
 					if(priceNum <= 0) {
 						addProductPage.showMessage("Price must above zero");
+						viewAddProductPage();
 						return;
 					}
 					else {
@@ -69,11 +73,14 @@ public class ProductController {
 					}
 			    } catch (Exception e) {
 			    	addProductPage.showMessage("Price must be numeric");
+			    	viewAddProductPage();
 			    	return;
 			    }
 		}
 		if(stock.isEmpty()) {
 			addProductPage.showMessage("Stock must not empty");
+			viewAddProductPage();
+			return;
 		}
 		else {
 			count++;
@@ -82,6 +89,7 @@ public class ProductController {
 			        count++;
 					if(stockNum <= 0) {
 						addProductPage.showMessage("Stock must above zero");
+						viewAddProductPage();
 						return;
 					}
 					else {
@@ -89,6 +97,7 @@ public class ProductController {
 					}
 			    } catch (Exception e) {
 			    	addProductPage.showMessage("Stock must be numeric");
+			    	viewAddProductPage();
 			    	return;
 			    }
 		}
@@ -104,26 +113,27 @@ public class ProductController {
 		int count = 0;
 		Integer priceNum = 0;
 		Integer stockNum = 0;
-		Integer productId = Integer.parseInt(id);
+		Integer productId = 0;
+		productId = Integer.parseInt(id);
 		
 		if(name.equals("") || name.isEmpty()) {
-			manageProductPage.showMessage("Name must not empty");
-			return;
+			manageProductPage.showManageProductPageMessage("Name must not empty");
+			viewManageProductPage();
 		}
 		else {
 			count++;
 		}
 		if(description.equals("") || description.isEmpty()) {
-			manageProductPage.showMessage("Description must not empty");
-			return;
+			manageProductPage.showManageProductPageMessage("Description must not empty");
+			viewManageProductPage();
 		}
 		else {
 			count++;
 		}
 		
 		if(price.isEmpty()) {
-			manageProductPage.showMessage("Price must not empty");
-			return;
+			manageProductPage.showManageProductPageMessage("Price must not empty");
+			viewManageProductPage();
 		}
 		else {
 			count++;
@@ -131,42 +141,43 @@ public class ProductController {
 			        priceNum = Integer.parseInt(price);
 			        count++;
 					if(priceNum <= 0) {
-						manageProductPage.showMessage("Price must above zero");
-						return;
+						manageProductPage.showManageProductPageMessage("Price must above zero");
+						viewManageProductPage();
 					}
 					else {
 						count++;
 					}
 			    } catch (Exception e) {
-			    	manageProductPage.showMessage("Price must be numeric");
-			    	return;
+			    	manageProductPage.showManageProductPageMessage("Price must be numeric");
+			    	viewManageProductPage();
 			    }
 		}
 		if(stock.isEmpty()) {
-			manageProductPage.showMessage("Stock must not empty");
+			manageProductPage.showManageProductPageMessage("Stock must not empty");
+			viewManageProductPage();
 		}
 		else {
 			count++;
 			 try {
-			        stockNum = Integer.parseInt(price);
+			        stockNum = Integer.parseInt(stock);
 			        count++;
 					if(stockNum <= 0) {
-						manageProductPage.showMessage("Stock must above zero");
-						return;
+						manageProductPage.showManageProductPageMessage("Stock must above zero");
+						viewManageProductPage();
 					}
 					else {
 						count++;
 					}
 			    } catch (Exception e) {
-			    	manageProductPage.showMessage("Stock must be numeric");
-			    	return;
+			    	manageProductPage.showManageProductPageMessage("Stock must be numeric");
+			    	viewManageProductPage();
 			    }
 		}
 		
 		if(count == 8) {
 			ProductModel productModel = new ProductModel();
 			productModel.updateProduct(productId, name, description, priceNum, stockNum);
-			manageProductPage.showMessage("Product Has Been Updated Successfully!");
+			manageProductPage.showManageProductPageMessage("Product Has Been Updated Successfully!");
 			viewManageProductPage();
 		}
 	}
@@ -176,7 +187,7 @@ public class ProductController {
 		
 		ProductModel productModel = new ProductModel();
 		productModel.deleteProduct(productId);
-		manageProductPage.showMessage("Product Has Been Deleted Successfully!");
+		manageProductPage.showManageProductPageMessage("Product Has Been Deleted Successfully!");
 		viewManageProductPage();
 	}
 	
