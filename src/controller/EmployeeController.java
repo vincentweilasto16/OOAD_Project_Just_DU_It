@@ -2,17 +2,22 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import models.EmployeeModel;
-
+import models.ProductModel;
 import view.LoginPage;
-import view.ManageProductPage;
-
+import view.humanResource.AddEmployeePage;
+import view.humanResource.ManageEmployeePage;
+import view.productManagement.AddProductPage;
+import view.productManagement.ManageProductPage;
 
 public class EmployeeController {
 	
 	private static EmployeeController instance;
 	private LoginPage loginPage;
+	private ManageEmployeePage manageEmployeePage;
+	private AddEmployeePage addEmployeePage;
 
 	public EmployeeController() {
 		// TODO Auto-generated constructor stub
@@ -27,6 +32,14 @@ public class EmployeeController {
 	
 	public void viewLoginPage() {
 		loginPage = new LoginPage();
+	}
+	
+	public void viewManageEmployeePage() {
+		manageEmployeePage = new ManageEmployeePage();
+	}
+	
+	public void viewAddEmployeePage() {
+		addEmployeePage = new AddEmployeePage();
 	}
 	
 	public void login(String username, String password) {
@@ -47,14 +60,14 @@ public class EmployeeController {
 					}
 					else if(rs.getInt("role_id") == 2){
 						ProductController.getInstance().viewManageProductPage();
-						loginPage.getFrame().dispose();
 					}
 					else if(rs.getInt("role_id") == 3){
-
+						viewManageEmployeePage();
 					}
 					else if(rs.getInt("role_id") == 4){
 
 					}
+					loginPage.getFrame().dispose();
 				}
 				else {
 					loginPage.showMessage("Invalid Username or Password!");
@@ -68,5 +81,107 @@ public class EmployeeController {
 			}
 		}
 	}
+	
+	public Vector<EmployeeModel> getAllEmployee() {
+		EmployeeModel employee = new EmployeeModel();
+		return employee.getAllEmployee();
 
+	}
+	
+	public void addEmployee(String role, String name, String username, String salary) {
+		int count = 0;
+		int roleId = 0;
+		int salaryTemp;
+		
+		if(role.equals("")) {
+			addEmployeePage.showMessage("Role must not empty");
+			return;
+		}
+		else {
+			count++;
+			 try {
+			        roleId = Integer.parseInt(role);
+			        count++;
+	
+			    } catch (Exception e) {
+			    	addEmployeePage.showMessage("role must be numeric");
+			    	return;
+			    }
+			 
+				if(roleId < 1 || roleId > 4) {
+					addEmployeePage.showMessage("role not exists, Please input between 1 and 4!");
+					return;
+				}
+				else {
+					count++;
+				}
+		}
+		
+		if(name.equals("")) {
+			addEmployeePage.showMessage("Name must not empty");
+			return;
+		}
+		else {
+			count++;
+		}
+		
+		if(username.equals("")) {
+			addEmployeePage.showMessage("Username must not empty");
+			return;
+		}
+		else {
+			count++;
+		}
+		
+		if(salary.equals("")) {
+			addEmployeePage.showMessage("Salary must not empty");
+			return;
+		}
+		else {
+			count++;
+			 try {
+			        salaryTemp = Integer.parseInt(salary);
+			        count++;
+					
+			    } catch (Exception e) {
+			    	addEmployeePage.showMessage("Salary must be numeric");
+			    	return;
+			    }
+			 
+				if(salaryTemp <= 0) {
+					addEmployeePage.showMessage("Salary must above zero");
+					return;
+				}
+				else {
+					count++;
+				}
+		}
+		
+		if(count == 8) {
+			EmployeeModel employeeModel = new EmployeeModel();
+			employeeModel.insertEmployee(roleId, name, username, salaryTemp);
+			addEmployeePage.showMessage("Add Employee Successfully!");
+			addEmployeePage.getFrame().dispose();
+			viewManageEmployeePage();
+		}
+	}
+	
+	public void fireEmployee(int selectedIndex, String id, String status) {
+		if(selectedIndex == -1) {
+			manageEmployeePage.showManageProductPageMessage("Nothing Fired!");
+		}
+		else {
+			if(status.equals("Not Active")) {
+				manageEmployeePage.showManageProductPageMessage("This employee has been fired!");
+			}
+			else {
+				int employeeId = Integer.parseInt(id);			
+				EmployeeModel employeeModel = new EmployeeModel();
+				employeeModel.fireEmployee(employeeId);
+				manageEmployeePage.showManageProductPageMessage("Successfully fired employee!");
+				manageEmployeePage.getFrame().dispose();
+				viewManageEmployeePage();				
+			}
+		}
+	}
 }

@@ -1,4 +1,4 @@
-package view;
+package view.productManagement;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.ProductController;
 import models.ProductModel;
+import view.LoginPage;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

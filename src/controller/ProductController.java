@@ -3,8 +3,8 @@ package controller;
 import java.util.Vector;
 
 import models.ProductModel;
-import view.AddProductPage;
-import view.ManageProductPage;
+import view.productManagement.AddProductPage;
+import view.productManagement.ManageProductPage;
 
 public class ProductController {
 	
@@ -191,7 +191,7 @@ public class ProductController {
 	
 	public void deleteProduct(int selectedIndex, String id) {		
 		if(selectedIndex == -1) {
-			manageProductPage.showManageProductPageMessage("Nothing to delete!");
+			manageProductPage.showManageProductPageMessage("Nothing deleted!");
 		}
 		else {
 			int productId = Integer.parseInt(id);			
