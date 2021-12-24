@@ -240,7 +240,7 @@ public class ManageProductPage implements ActionListener {
 				String id = idTxt.getText();
 				ProductController.getInstance().deleteProduct(selectedIndex, id);
 				selectedIndex = -1;	
-				frame.dispose();
+				
 			
 		}
 		else if(e.getSource().equals(btnLogout)) {

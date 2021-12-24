@@ -116,6 +116,7 @@ public class AddProductPage implements ActionListener {
 			String stock = stockTxt.getText();
 			
 			ProductController.getInstance().addProduct(name, description, price, stock);
+//			frame.dispose();
 		}
 	}
 

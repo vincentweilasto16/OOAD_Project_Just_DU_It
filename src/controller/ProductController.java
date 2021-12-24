@@ -38,7 +38,6 @@ public class ProductController {
 		
 		if(name.equals("") || name.isEmpty()) {
 			addProductPage.showMessage("Name must not empty");
-			viewAddProductPage();
 			return;
 		}
 		else {
@@ -46,7 +45,6 @@ public class ProductController {
 		}
 		if(description.equals("") || description.isEmpty()) {
 			addProductPage.showMessage("Description must not empty");
-			viewAddProductPage();
 			return;
 		}
 		else {
@@ -55,49 +53,38 @@ public class ProductController {
 		
 		if(price.isEmpty()) {
 			addProductPage.showMessage("Price must not empty");
-			viewAddProductPage();
 			return;
 		}
 		else {
 			count++;
 			 try {
 			        priceNum = Integer.parseInt(price);
-			        count++;
-					if(priceNum <= 0) {
-						addProductPage.showMessage("Price must above zero");
-						viewAddProductPage();
-						return;
-					}
-					else {
-						count++;
-					}
+			        count++;	
 			    } catch (Exception e) {
 			    	addProductPage.showMessage("Price must be numeric");
-			    	viewAddProductPage();
 			    	return;
 			    }
+			 
+			 	if(priceNum <= 0) {
+					addProductPage.showMessage("Price must above zero");
+					return;
+				}
+				else {
+					count++;
+				}
 		}
 		if(stock.isEmpty()) {
 			addProductPage.showMessage("Stock must not empty");
-			viewAddProductPage();
 			return;
 		}
 		else {
 			count++;
 			 try {
-			        stockNum = Integer.parseInt(price);
+			        stockNum = Integer.parseInt(stock);
 			        count++;
-					if(stockNum <= 0) {
-						addProductPage.showMessage("Stock must above zero");
-						viewAddProductPage();
-						return;
-					}
-					else {
-						count++;
-					}
+					
 			    } catch (Exception e) {
 			    	addProductPage.showMessage("Stock must be numeric");
-			    	viewAddProductPage();
 			    	return;
 			    }
 			 
@@ -211,6 +198,8 @@ public class ProductController {
 			ProductModel productModel = new ProductModel();
 			productModel.deleteProduct(productId);
 			manageProductPage.showManageProductPageMessage("Product Has Been Deleted Successfully!");
+			manageProductPage.getFrame().dispose();
+			viewManageProductPage();
 		}
 	}
 	
