@@ -78,6 +78,7 @@ public class LoginPage extends JFrame{
 		
 		desktopPane.add(internalFrame);
 		add(desktopPane);
+	
 		
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
@@ -86,12 +87,16 @@ public class LoginPage extends JFrame{
 				String password = new String(passwordTxt.getPassword());
 				
 				EmployeeController.getInstance().login(username, password);
-				frame.dispose();
+//				frame.dispose();
 			}
 		});
 		
 		
 		init();
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 	
 	public void showMessage(String message) {

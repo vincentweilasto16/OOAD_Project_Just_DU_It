@@ -98,6 +98,10 @@ public class AddProductPage implements ActionListener {
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -112,7 +116,6 @@ public class AddProductPage implements ActionListener {
 			String stock = stockTxt.getText();
 			
 			ProductController.getInstance().addProduct(name, description, price, stock);
-			frame.dispose();
 		}
 	}
 

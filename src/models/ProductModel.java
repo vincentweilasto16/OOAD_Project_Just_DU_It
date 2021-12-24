@@ -141,7 +141,7 @@ public class ProductModel {
 		
 	}
 	
-	public void deleteProduct(Integer id) {
+	public void deleteProduct(int id) {
 		
 		String query = "DELETE FROM product WHERE id = ?";
 		PreparedStatement ps = con.preparedStatement(query);

@@ -13,7 +13,6 @@ public class EmployeeController {
 	
 	private static EmployeeController instance;
 	private LoginPage loginPage;
-	private ManageProductPage manageProductPage;
 
 	public EmployeeController() {
 		// TODO Auto-generated constructor stub
@@ -33,6 +32,8 @@ public class EmployeeController {
 	public void login(String username, String password) {
 		if(username.equals("") || password.equals("")) {
 			loginPage.showMessage("All field must not be empty!");
+			loginPage.getFrame().dispose();
+			viewLoginPage();
 			return;
 		}
 		else {
@@ -45,7 +46,8 @@ public class EmployeeController {
 						
 					}
 					else if(rs.getInt("role_id") == 2){
-						new ManageProductPage();
+						ProductController.getInstance().viewManageProductPage();
+						loginPage.getFrame().dispose();
 					}
 					else if(rs.getInt("role_id") == 3){
 
@@ -56,6 +58,8 @@ public class EmployeeController {
 				}
 				else {
 					loginPage.showMessage("Invalid Username or Password!");
+					loginPage.getFrame().dispose();
+					viewLoginPage();
 					return;
 				}
 			} catch (SQLException e) {

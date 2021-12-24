@@ -30,6 +30,7 @@ public class ManageProductPage implements ActionListener {
 	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private int selectedIndex = -1;
 
 
 	/**
@@ -91,13 +92,13 @@ public class ManageProductPage implements ActionListener {
 //			dtm.addRow(row);
 //		}
 //		
-		table.setModel(dtm);
+//		table.setModel(dtm);
 		scrollPane = new JScrollPane(table);
 		frame.getContentPane().add(scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int selectedIndex = table.getSelectedRow();
+				selectedIndex = table.getSelectedRow();
 				String id = dtm.getValueAt(selectedIndex, 0).toString();
 				String name = dtm.getValueAt(selectedIndex, 1).toString();
 				String description = dtm.getValueAt(selectedIndex, 2).toString();
@@ -212,7 +213,12 @@ public class ManageProductPage implements ActionListener {
 	public void showMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
-
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnAddProduct)) {
@@ -226,13 +232,16 @@ public class ManageProductPage implements ActionListener {
 			String price = priceTxt.getText();
 			String stock = stockTxt.getText();
 			
-			ProductController.getInstance().updateProduct(id, name, description, price, stock);
-			frame.dispose();
+			selectedIndex =ProductController.getInstance().updateProduct(selectedIndex, id, name, description, price, stock);
+			
+//			frame.dispose();
 		}
 		else if(e.getSource().equals(btnDelete)) {
-			String id = idTxt.getText();
-			ProductController.getInstance().deleteProduct(id);
-			frame.dispose();
+				String id = idTxt.getText();
+				ProductController.getInstance().deleteProduct(selectedIndex, id);
+				selectedIndex = -1;	
+				frame.dispose();
+			
 		}
 		else if(e.getSource().equals(btnLogout)) {
 			new LoginPage();
