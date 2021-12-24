@@ -210,7 +210,7 @@ public class ManageProductPage implements ActionListener {
 		
 	}
 	
-	public void showMessage(String message) {
+	public void showManageProductPageMessage(String message) {
 		JOptionPane.showMessageDialog(frame, message);
 	}
 	
