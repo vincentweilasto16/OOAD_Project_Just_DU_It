@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import main.Main;
 import models.EmployeeModel;
 import models.ProductModel;
 import view.LoginPage;
@@ -54,33 +55,30 @@ public class EmployeeController {
 		}
 		else {
 			EmployeeModel employeeModel = new EmployeeModel();
-			ResultSet rs = employeeModel.getEmployee(username, password);
-			try {
-				if(rs.next()) {
-//				Main.employee = new EmployeeModel(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString("username"), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
-					if(rs.getInt("role_id") == 1){
-						CartController.getInstance().viewAddToCartPage();
-					}
-					else if(rs.getInt("role_id") == 2){
-						ProductController.getInstance().viewManageProductPage();
-					}
-					else if(rs.getInt("role_id") == 3){
-						viewManageEmployeePage();
-					}
-					else if(rs.getInt("role_id") == 4){
+			Main.employee = employeeModel.getEmployee(username, password);
+			int roleId = 0;
 
-					}
-					loginPage.getFrame().dispose();
+			if(Main.employee != null) {
+				roleId = Main.employee.getRoleId();
+				if(roleId == 1){
+					CartController.getInstance().viewAddToCartPage();
 				}
-				else {
-					loginPage.showMessage("Invalid Username or Password!");
-					loginPage.getFrame().dispose();
-					viewLoginPage();
-					return;
+				else if(roleId == 2){
+					ProductController.getInstance().viewManageProductPage();
 				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				else if(roleId == 3){
+					viewManageEmployeePage();
+				}
+				else if(roleId == 4){
+
+				}
+				loginPage.getFrame().dispose();
+			}
+			else {
+				loginPage.showMessage("Invalid Username or Password!");
+				loginPage.getFrame().dispose();
+				viewLoginPage();
+				return;
 			}
 		}
 	}

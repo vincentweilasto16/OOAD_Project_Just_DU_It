@@ -34,6 +34,7 @@ public class AddToCartPage implements ActionListener {
 	private JTable table;
 	private int selectedIndex = -1;
 	private JTextField idTxt, nameTxt, quantityTxt;
+	private String stock, price;
 
 	public AddToCartPage() {
 		initialize();
@@ -75,14 +76,16 @@ public class AddToCartPage implements ActionListener {
 		table = new JTable(dtm);
 		table.setRowHeight(30);
 		
-		scrollPane = new JScrollPane(table);
-		frame.getContentPane().add(scrollPane);
+//		scrollPane = new JScrollPane(table);
+//		frame.getContentPane().add(scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				selectedIndex = table.getSelectedRow();
 				String id = dtm.getValueAt(selectedIndex, 0).toString();
 				String name = dtm.getValueAt(selectedIndex, 1).toString();
+				price = dtm.getValueAt(selectedIndex, 3).toString();
+				stock = dtm.getValueAt(selectedIndex, 4).toString();
 				
 				idTxt.setText(id);
 				nameTxt.setText(name);
@@ -155,7 +158,7 @@ public class AddToCartPage implements ActionListener {
 			String id, quantity;
 			id = idTxt.getText();
 			quantity = quantityTxt.getText();
-			CartController.getInstance().addToCart(selectedIndex, id, quantity);
+			CartController.getInstance().addToCart(selectedIndex, id, quantity, price, stock);
 		}
 		else if(e.getSource().equals(btnViewCart)){
 			CartController.getInstance().viewManageCartPage();

@@ -58,7 +58,7 @@ public class ManageEmployeePage implements ActionListener{
 		
 		for (int i = 0; i < employees.size(); i++) {
 			data[i][0] = employees.get(i).getId();
-			data[i][1] = employees.get(i).getRole();
+			data[i][1] = employees.get(i).getRoleId();
 			data[i][2] = employees.get(i).getName();
 			data[i][3] = employees.get(i).getUsername();
 			data[i][4] = employees.get(i).getStatus();

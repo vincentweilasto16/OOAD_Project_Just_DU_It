@@ -233,7 +233,7 @@ public class ManageProductPage implements ActionListener {
 			String price = priceTxt.getText();
 			String stock = stockTxt.getText();
 			
-			selectedIndex =ProductController.getInstance().updateProduct(selectedIndex, id, name, description, price, stock);
+			selectedIndex = ProductController.getInstance().updateProduct(selectedIndex, id, name, description, price, stock);
 			
 //			frame.dispose();
 		}

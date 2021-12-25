@@ -5,9 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 import controller.CartController;
 import controller.EmployeeController;
 import controller.ProductController;
+import controller.TransactionController;
+import main.Main;
 import models.CartItemModel;
 import models.EmployeeModel;
 import models.ProductModel;
@@ -27,13 +32,17 @@ import view.LoginPage;
 public class ManageCartPage implements ActionListener {
 
 	private JFrame frame;
-	private JLabel titleLbl, lblCart;
+	private JLabel titleLbl, lblCart, totalPriceLbl;
 	private JButton btnRemove, btnLogout, btnConfirm, btnBack;
 	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private int selectedIndex = -1;
 	private String id;
+	private JTextField totalPriceTxt;
+	private String totalPrice;
+	private JComboBox<String> paymentType;
+	private JLabel paymentTypeLbl;
 
 	public ManageCartPage() {
 		initialize();
@@ -73,8 +82,8 @@ public class ManageCartPage implements ActionListener {
 		table = new JTable(dtm);
 		table.setRowHeight(30);
 		
-		scrollPane = new JScrollPane(table);
-		frame.getContentPane().add(scrollPane);
+//		scrollPane = new JScrollPane(table);
+//		frame.getContentPane().add(scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -84,7 +93,7 @@ public class ManageCartPage implements ActionListener {
 		});
 		
 		btnRemove = new JButton("Remove Product");
-		btnRemove.setBounds(47, 468, 165, 25);
+		btnRemove.setBounds(34, 615, 165, 25);
 		btnRemove.addActionListener(this);
 		frame.getContentPane().add(btnRemove);
 		
@@ -99,7 +108,7 @@ public class ManageCartPage implements ActionListener {
 		
 	    btnConfirm = new JButton("Confirm");
 	    btnConfirm.addActionListener(this);
-		btnConfirm.setBounds(633, 468, 117, 25);
+		btnConfirm.setBounds(653, 615, 117, 25);
 		frame.getContentPane().add(btnConfirm);
 		
 		lblCart = new JLabel("Cart");
@@ -114,6 +123,30 @@ public class ManageCartPage implements ActionListener {
 	
 		scrollPane.setViewportView(table);
 		
+
+		totalPriceTxt = new JTextField("0");
+		totalPriceTxt.setEditable(false);
+		totalPriceTxt.setBounds(634, 449, 116, 22);
+		totalPriceTxt.setText(totalPrice);
+		frame.getContentPane().add(totalPriceTxt);
+		totalPriceTxt.setColumns(10);
+		
+		
+		totalPriceLbl = new JLabel("Total Price");
+		totalPriceLbl.setBounds(561, 452, 67, 16);
+		frame.getContentPane().add(totalPriceLbl);
+		
+		Vector<String> paymentTypes = new Vector<>();
+		paymentTypes.add("Cash");
+		paymentTypes.add("Credit");
+		paymentType = new JComboBox<String>(paymentTypes);
+		paymentType.setBounds(139, 452, 102, 25);
+		frame.getContentPane().add(paymentType);
+		
+		paymentTypeLbl = new JLabel("Payment Type");
+		paymentTypeLbl.setBounds(46, 455, 85, 16);
+		frame.getContentPane().add(paymentTypeLbl);
+		
 	}
 	
 	public void showMessage(String message) {
@@ -124,6 +157,11 @@ public class ManageCartPage implements ActionListener {
 		return frame;
 	}
 	
+	public void setTotalPrice(String totalPrice) {
+		this.totalPrice = totalPrice;
+		System.out.println(this.totalPrice);
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btnRemove)) {
@@ -131,8 +169,11 @@ public class ManageCartPage implements ActionListener {
 			selectedIndex = -1;
 		}
 		else if(e.getSource().equals(btnConfirm)){
+			String payment = paymentType.getSelectedItem().toString();
+			SimpleDateFormat ft = new SimpleDateFormat ("yyyy-M-dd");
+			Date purchaseDate = new Date();
 			
-			
+			TransactionController.getInstance().addTransaction(ft.format(purchaseDate), Main.employee.getId(), payment);
 		}
 		else if(e.getSource().equals(btnBack)) {
 			CartController.getInstance().viewAddToCartPage();

@@ -10,29 +10,21 @@ import connect.Connect;
 public class EmployeeModel {
 	
 	private Connect con = Connect.getInstance();
-	private int id, salary;
-	private String role, name, username, status, password;
+	private int id, roleId, salary;
+	private String name, username, status, password;
 
 	public EmployeeModel() {
 		
 	}
 	
-	public EmployeeModel(int id, int salary, String role, String name, String username, String status) {
+	public EmployeeModel(int id, int salary, int roleId, String name, String username, String status) {
 		super();
 		this.id = id;
 		this.salary = salary;
-		this.role = role;
+		this.roleId = roleId;
 		this.name = name;
 		this.username = username;
 		this.status = status;
-	}
-
-	public Connect getCon() {
-		return con;
-	}
-
-	public void setCon(Connect con) {
-		this.con = con;
 	}
 
 	public int getId() {
@@ -51,12 +43,12 @@ public class EmployeeModel {
 		this.salary = salary;
 	}
 
-	public String getRole() {
-		return role;
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public String getName() {
@@ -91,7 +83,7 @@ public class EmployeeModel {
 		this.password = password;
 	}
 	
-	public ResultSet getEmployee(String username, String password) {
+	public EmployeeModel getEmployee(String username, String password) {
 		String query = "SELECT * FROM employee WHERE username = ? AND password = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		ResultSet rs = null;
@@ -102,17 +94,22 @@ public class EmployeeModel {
 			ps.execute();
 			
 			rs = ps.getResultSet();
+			
+			if(rs.next()) {
+				EmployeeModel employee = map(rs);
+				return employee;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return rs;
+		return null;
 	}
 	
 	private EmployeeModel map(ResultSet rs) {
 		try {
 			int id = rs.getInt("id");
-			String role = rs.getString("role_id");
+			int role = rs.getInt("role_id");
 			String name = rs.getString("name");
 			String username = rs.getString("username");
 			String status = rs.getString("status");
