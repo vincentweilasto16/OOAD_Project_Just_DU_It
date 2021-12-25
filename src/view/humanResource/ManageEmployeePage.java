@@ -1,7 +1,5 @@
 package view.humanResource;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,17 +11,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.EmployeeController;
-import controller.ProductController;
 import models.EmployeeModel;
-import models.ProductModel;
 import view.LoginPage;
 
 public class ManageEmployeePage implements ActionListener{
@@ -36,7 +30,6 @@ public class ManageEmployeePage implements ActionListener{
 	private JScrollPane scrollPane;
 	private JTable table;
 	private int selectedIndex = -1;
-	private JPanel contentPane;
 	private JTextField salaryTxt;
 	private JLabel passwordLbl;
 	private JTextField passwordTxt;
@@ -231,5 +224,5 @@ public class ManageEmployeePage implements ActionListener{
 			frame.dispose();
 		}
 	
-}
+	}
 }

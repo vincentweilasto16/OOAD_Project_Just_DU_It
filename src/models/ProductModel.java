@@ -105,6 +105,27 @@ public class ProductModel {
 		return null;
 	}
 	
+	public ProductModel getProduct(int id) {
+
+		String query = "SELECT * FROM product WHERE id = ?";
+		PreparedStatement ps = con.preparedStatement(query);
+		ResultSet rs = con.executeQuery(query);
+		
+		try {
+			ps.setInt(1, id);
+			while(rs.next()) {
+				ProductModel product = map(rs);
+				return product;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
 	
 	public void insertProduct(String name, String description, Integer price, Integer stock) {
 		

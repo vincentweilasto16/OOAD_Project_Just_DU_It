@@ -11,6 +11,8 @@ import view.humanResource.AddEmployeePage;
 import view.humanResource.ManageEmployeePage;
 import view.productManagement.AddProductPage;
 import view.productManagement.ManageProductPage;
+import view.transactionManagement.ManageCartPage;
+import view.transactionManagement.AddToCartPage;
 
 public class EmployeeController {
 	
@@ -42,6 +44,7 @@ public class EmployeeController {
 		addEmployeePage = new AddEmployeePage();
 	}
 	
+	
 	public void login(String username, String password) {
 		if(username.equals("") || password.equals("")) {
 			loginPage.showMessage("All field must not be empty!");
@@ -56,7 +59,7 @@ public class EmployeeController {
 				if(rs.next()) {
 //				Main.employee = new EmployeeModel(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString("username"), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
 					if(rs.getInt("role_id") == 1){
-						
+						CartController.getInstance().viewAddToCartPage();
 					}
 					else if(rs.getInt("role_id") == 2){
 						ProductController.getInstance().viewManageProductPage();
@@ -160,7 +163,7 @@ public class EmployeeController {
 		if(count == 8) {
 			EmployeeModel employeeModel = new EmployeeModel();
 			employeeModel.insertEmployee(roleId, name, username, salaryTemp);
-			addEmployeePage.showMessage("Add Employee Successfully!");
+			addEmployeePage.showMessage("Add new Employee Successfully!");
 			addEmployeePage.getFrame().dispose();
 			viewManageEmployeePage();
 		}
