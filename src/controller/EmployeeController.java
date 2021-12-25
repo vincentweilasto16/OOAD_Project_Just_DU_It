@@ -184,4 +184,62 @@ public class EmployeeController {
 			}
 		}
 	}
+	
+	public int updateEmployee(int selectedIndex, String id, String name, String salary, String password) {
+		
+		if(selectedIndex == -1) {
+			manageEmployeePage.showManageProductPageMessage("Nothing updated!");
+		}
+		else {
+			int count = 0;
+			Integer salaryTemp = 0;
+			int employeeId = Integer.parseInt(id);
+			
+			if(name.equals("")) {
+				manageEmployeePage.showManageProductPageMessage("Name must not empty");
+			}
+			else {
+				count++;
+			}
+			
+			if(salary.equals("")) {
+				manageEmployeePage.showManageProductPageMessage("Salary must not empty");
+			}
+			else {
+				count++;
+				 try {
+				        salaryTemp = Integer.parseInt(salary);
+				        count++;
+						if(salaryTemp <= 0) {
+							manageEmployeePage.showManageProductPageMessage("Salary must above zero");
+						}
+						else {
+							count++;
+						}
+				    } catch (Exception e) {
+				    	manageEmployeePage.showManageProductPageMessage("Salary must be numeric");
+				    }
+			}
+			
+			if(password.equals("")) {
+				manageEmployeePage.showManageProductPageMessage("Password must not empty");
+			}
+			else {
+				count++;
+			}
+			
+			if(count == 5) {
+				EmployeeModel employeeModel = new EmployeeModel();
+				employeeModel.updateEmployee(employeeId, name, salaryTemp, password);
+				manageEmployeePage.showManageProductPageMessage("Employee Has Been Updated Successfully!");
+				manageEmployeePage.getFrame().dispose();
+				viewManageEmployeePage();
+				return -1;
+			}
+		}
+		
+		return selectedIndex;
+		
+		
+	}
 }

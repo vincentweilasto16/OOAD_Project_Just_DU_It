@@ -178,5 +178,20 @@ public class EmployeeModel {
 		}
 	}
 	
+	public void updateEmployee(int employeeId, String name, int salary, String password) {
+		String query = "UPDATE employee SET name = ?, salary = ?, password = ? WHERE id = ?";
+		PreparedStatement ps = con.preparedStatement(query);
+		
+		try {
+			ps.setString(1, name);
+			ps.setInt(2, salary);
+			ps.setString(3, password);
+			ps.setInt(4, employeeId);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 }

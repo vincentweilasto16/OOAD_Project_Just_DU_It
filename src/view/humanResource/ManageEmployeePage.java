@@ -71,7 +71,6 @@ public class ManageEmployeePage implements ActionListener{
 			data[i][4] = employees.get(i).getStatus();
 			data[i][5] = employees.get(i).getSalary();
 		}
-		
 			
 		dtm = new DefaultTableModel(data, header) {
 			@Override
@@ -215,12 +214,11 @@ public class ManageEmployeePage implements ActionListener{
 		}
 		else if(e.getSource().equals(btnUpdate)) {
 			String id = idTxt.getText();
-			String role = roleTxt.getText();
 			String name = nameTxt.getText();
-			String username = usernameTxt.getText();
 			String salary = salaryTxt.getText();
+		    String password = passwordTxt.getText();
 			
-//			selectedIndex = EmployeeController.getInstance().updateEmployee(selectedIndex, id, role, name, username, salary);
+			selectedIndex = EmployeeController.getInstance().updateEmployee(selectedIndex, id, name, salary, password);
 		}
 		else if(e.getSource().equals(btnFire)) {
 				String id = idTxt.getText();
