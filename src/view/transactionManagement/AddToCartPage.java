@@ -20,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import controller.CartController;
 import controller.EmployeeController;
 import controller.ProductController;
+import controller.TransactionController;
+import main.Main;
 import models.EmployeeModel;
 import models.ProductModel;
 import view.LoginPage;
@@ -28,7 +30,7 @@ public class AddToCartPage implements ActionListener {
 
 	private JFrame frame;
 	private JLabel titleLbl, idLbl, nameLbl, lblQuantity;
-	private JButton btnAddCart, btnLogout, btnViewCart;
+	private JButton btnAddCart, btnLogout, btnViewCart, btnViewHistory;
 	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -42,6 +44,7 @@ public class AddToCartPage implements ActionListener {
 	}
 
 	private void initialize() {
+		System.out.println(Main.employee.getName());
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,6 +145,11 @@ public class AddToCartPage implements ActionListener {
 	
 		scrollPane.setViewportView(table);
 		
+		btnViewHistory = new JButton("View History");
+		btnViewHistory.setBounds(611, 613, 152, 25);
+		btnViewHistory.addActionListener(this);
+		frame.getContentPane().add(btnViewHistory);
+		
 	}
 	
 	public void showMessage(String message) {
@@ -164,8 +172,12 @@ public class AddToCartPage implements ActionListener {
 			CartController.getInstance().viewManageCartPage();
 			frame.dispose();
 		}
+		else if(e.getSource().equals(btnViewHistory)){
+			TransactionController.getInstance().viewTodayTransactionHistoryPage();
+			frame.dispose();
+		}
 		else if(e.getSource().equals(btnLogout)) {
-			new LoginPage();
+			EmployeeController.getInstance().logout();
 			frame.dispose();
 		}
 	

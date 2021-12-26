@@ -220,7 +220,7 @@ public class ManageEmployeePage implements ActionListener{
 				selectedIndex = -1;
 		}
 		else if(e.getSource().equals(btnLogout)) {
-			new LoginPage();
+			EmployeeController.getInstance().logout();
 			frame.dispose();
 		}
 	

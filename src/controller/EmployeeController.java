@@ -45,6 +45,10 @@ public class EmployeeController {
 		addEmployeePage = new AddEmployeePage();
 	}
 	
+	public void logout() {
+		loginPage = new LoginPage();
+		Main.employee = null;
+	}
 	
 	public void login(String username, String password) {
 		if(username.equals("") || password.equals("")) {

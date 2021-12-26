@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
@@ -159,7 +159,7 @@ public class ManageCartPage implements ActionListener {
 	
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
-		System.out.println(this.totalPrice);
+//		System.out.println(this.totalPrice);
 	}
 	
 	@Override
@@ -170,17 +170,17 @@ public class ManageCartPage implements ActionListener {
 		}
 		else if(e.getSource().equals(btnConfirm)){
 			String payment = paymentType.getSelectedItem().toString();
-			SimpleDateFormat ft = new SimpleDateFormat ("yyyy-M-dd");
-			Date purchaseDate = new Date();
+			long millis = System.currentTimeMillis();  
+			Date purchaseDate = new Date(millis);
 			
-			TransactionController.getInstance().addTransaction(ft.format(purchaseDate), Main.employee.getId(), payment);
+			TransactionController.getInstance().addTransaction(purchaseDate, Main.employee.getId(), payment);
 		}
 		else if(e.getSource().equals(btnBack)) {
 			CartController.getInstance().viewAddToCartPage();
 			frame.dispose();
 		}
 		else {
-			new LoginPage();
+			EmployeeController.getInstance().logout();
 			frame.dispose();
 		}
 	

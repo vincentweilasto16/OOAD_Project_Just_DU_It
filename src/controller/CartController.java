@@ -144,8 +144,7 @@ public class CartController {
 	
 	public void clearCartItemList() {
 		cart.clear();
-		manageCartPage.showMessage("Successfull Clear Cart Item List!");
-		viewManageCartPage();
+		manageCartPage.getFrame().dispose();
 	}
 	
 	

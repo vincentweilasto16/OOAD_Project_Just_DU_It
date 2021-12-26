@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import controller.EmployeeController;
 import controller.ProductController;
 import models.ProductModel;
 import view.LoginPage;
@@ -245,7 +246,7 @@ public class ManageProductPage implements ActionListener {
 			
 		}
 		else if(e.getSource().equals(btnLogout)) {
-			new LoginPage();
+			EmployeeController.getInstance().logout();
 			frame.dispose();
 		}
 	}

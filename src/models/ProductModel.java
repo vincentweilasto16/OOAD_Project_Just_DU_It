@@ -109,15 +109,18 @@ public class ProductModel {
 
 		String query = "SELECT * FROM product WHERE id = ?";
 		PreparedStatement ps = con.preparedStatement(query);
-		ResultSet rs = con.executeQuery(query);
+		ResultSet rs = null;
 		
 		try {
 			ps.setInt(1, id);
-			while(rs.next()) {
+			ps.execute();
+			
+			rs = ps.getResultSet();
+			
+			if(rs.next()) {
 				ProductModel product = map(rs);
 				return product;
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -155,6 +158,21 @@ public class ProductModel {
 			ps.setInt(3, price);
 			ps.setInt(4, stock);
 			ps.setInt(5, id);
+			ps.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void updateStock(Integer id, Integer stock) {
+		
+		String query = "UPDATE product SET stock = ? WHERE id = ?";
+		PreparedStatement ps = con.preparedStatement(query);
+		
+		try {
+			ps.setInt(1, stock);
+			ps.setInt(2, id);
 			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

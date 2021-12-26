@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import models.ProductModel;
@@ -208,6 +210,12 @@ public class ProductController {
 		ProductModel productModel = new ProductModel();
 		return productModel.getAllProduct();
 
+	}
+	
+	public void reduceProductStock(Integer id, Integer stock) {
+		ProductModel productModel = new ProductModel();
+		productModel = productModel.getProduct(id);
+		productModel.updateStock(id, productModel.getStock() - stock);
 	}
 
 }
