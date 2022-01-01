@@ -131,6 +131,40 @@ public class TransactionModel {
 		return null;
 	}
 	
+	public Vector<TransactionModel> getTransactionReport(String date) {
+		
+		String[] dateTemp = date.split("/", 2);
+	
+		int month = Integer.parseInt(dateTemp[0]);
+		int year = Integer.parseInt(dateTemp[1]);
+
+		String query = "SELECT * FROM transaction WHERE MONTH(purchase_date) = ? AND YEAR(purchase_date) = ?";
+		PreparedStatement ps = con.preparedStatement(query);
+		ResultSet rs = null;
+		
+		Vector<TransactionModel> transactions = new Vector<>();
+
+		
+		try {
+			ps.setInt(1, month);
+			ps.setInt(2, year);
+			ps.execute();
+			
+			rs = ps.getResultSet();
+			
+			while(rs.next()) {
+				TransactionModel transaction = map(rs);
+				transactions.add(transaction);
+			}
+
+			return transactions;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 
 
 

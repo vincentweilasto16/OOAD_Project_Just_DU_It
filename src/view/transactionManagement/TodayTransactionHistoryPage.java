@@ -111,7 +111,7 @@ public class TodayTransactionHistoryPage implements ActionListener {
 		frame.getContentPane().add(btnLogout);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(47, 91, 703, 221);
+		scrollPane.setBounds(48, 131, 703, 221);
 		frame.getContentPane().add(scrollPane);
 		
 //		table = new JTable();
@@ -137,6 +137,11 @@ public class TodayTransactionHistoryPage implements ActionListener {
 //			}
 //		});
 		scrollPane.setViewportView(table);
+		
+		JLabel lblHistoryTransaction = new JLabel("History Transaction");
+		lblHistoryTransaction.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblHistoryTransaction.setBounds(342, 84, 195, 16);
+		frame.getContentPane().add(lblHistoryTransaction);
 		
 	}
 	

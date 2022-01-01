@@ -75,8 +75,8 @@ public class ManageEmployeePage implements ActionListener{
 		table = new JTable(dtm);
 		table.setRowHeight(30);
 		
-		scrollPane = new JScrollPane(table);
-		frame.getContentPane().add(scrollPane);
+//		scrollPane = new JScrollPane(table);
+//		frame.getContentPane().add(scrollPane);
 		
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

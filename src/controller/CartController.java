@@ -95,10 +95,14 @@ public class CartController {
 				CartItemModel cartItemModel = new CartItemModel(productId, quantityTemp);
 				cart.add(cartItemModel);
 				addToCartPage.showMessage("Add Product to Cart Successfully!");
+				addToCartPage.getFrame().dispose();
+				viewManageCartPage(Integer.toString(totalPrice));
 			}
 			else if(count == 3) {
 				cartItem.setQuantity(temp);
 				addToCartPage.showMessage("Add Product to Cart Successfully!");
+				addToCartPage.getFrame().dispose();
+				viewManageCartPage(Integer.toString(totalPrice));
 			}
 			
 			for (CartItemModel cartItemModel : cart) {
@@ -106,10 +110,10 @@ public class CartController {
 			}
 			
 					
-			addToCartPage.getFrame().dispose();
+			
 //			manageCartPage = new ManageCartPage();
 //			manageCartPage.setTotalPrice(Integer.toString(totalPrice));
-			viewManageCartPage(Integer.toString(totalPrice));
+			
 		}
 	}
 	

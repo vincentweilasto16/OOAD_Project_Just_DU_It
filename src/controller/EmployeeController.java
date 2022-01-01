@@ -74,7 +74,7 @@ public class EmployeeController {
 					viewManageEmployeePage();
 				}
 				else if(roleId == 4){
-
+					TransactionController.getInstance().viewTransactionReportPage();
 				}
 				loginPage.getFrame().dispose();
 			}
