@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.EmployeeController;
+import controller.TransactionController;
+import main.Main;
 import models.EmployeeModel;
 import view.LoginPage;
 
@@ -25,7 +27,7 @@ public class ManageEmployeePage implements ActionListener{
 	private JFrame frame;
 	private JLabel titleLbl, idLbl, roleLbl, nameLbl, usernameLbl, statusLbl;
 	private JTextField idTxt, roleTxt, nameTxt, usernameTxt, statusTxt;
-	private JButton btnUpdate, btnFire, btnAddEmployee, btnLogout;
+	private JButton btnUpdate, btnFire, btnAddEmployee, btnLogout, btnBack;
 	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -189,6 +191,14 @@ public class ManageEmployeePage implements ActionListener{
 	
 		scrollPane.setViewportView(table);
 		
+		if(Main.employee.getRoleId() == 4) {
+			btnBack = new JButton("Back");
+			btnBack.setBounds(12, 13, 66, 25);
+			btnBack.addActionListener(this);
+			frame.getContentPane().add(btnBack);
+		}
+
+		
 	}
 	
 	public void showManageProductPageMessage(String message) {
@@ -221,6 +231,10 @@ public class ManageEmployeePage implements ActionListener{
 		}
 		else if(e.getSource().equals(btnLogout)) {
 			EmployeeController.getInstance().logout();
+			frame.dispose();
+		}
+		else if(e.getSource().equals(btnBack)) {
+			TransactionController.getInstance().viewTransactionReportPage();
 			frame.dispose();
 		}
 	

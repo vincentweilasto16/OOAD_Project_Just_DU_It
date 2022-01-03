@@ -12,6 +12,9 @@ public class CartController {
 	private AddToCartPage addToCartPage;
 	private ManageCartPage manageCartPage;
 	private Vector<CartItemModel> cart = new Vector<>();
+	private Vector<Integer> priceList = new Vector<>();
+	private int totalPrice = 0;
+	private int priceTemp = 0;
 
 	public Vector<CartItemModel> getCartList() {
 		return cart;
@@ -29,12 +32,6 @@ public class CartController {
 		manageCartPage = new ManageCartPage();
 	}
 	
-	public void viewManageCartPage(String totalPrice) {
-		manageCartPage = new ManageCartPage();
-		manageCartPage.setTotalPrice(totalPrice);
-	}
-	
-	
 	public static CartController getInstance() {
 		if(instance == null) {
 			instance = new CartController();
@@ -44,16 +41,18 @@ public class CartController {
 	
 	public void addToCart(int selectedIndex, String id, String quantity, String price, String stock) {
 		
-		int totalPrice = 0;
+		
 		if(selectedIndex == -1) {
 			addToCartPage.showMessage("Nothing to insert!");
 		}
 		else {
-
+			totalPrice = 0;
+			priceTemp = 0;
 			int count = 0;
 			int quantityTemp = 0;
 			int productId = Integer.parseInt(id);
-			int priceTemp = Integer.parseInt(price);
+			priceTemp = Integer.parseInt(price);
+			priceList.add(priceTemp);
 			int stockTemp = Integer.parseInt(stock);
 			CartItemModel cartItem = new CartItemModel();
 			
@@ -94,35 +93,34 @@ public class CartController {
 			if(count == 2) {
 				CartItemModel cartItemModel = new CartItemModel(productId, quantityTemp);
 				cart.add(cartItemModel);
-				addToCartPage.showMessage("Add Product to Cart Successfully!");
-				addToCartPage.getFrame().dispose();
-				viewManageCartPage(Integer.toString(totalPrice));
 			}
 			else if(count == 3) {
 				cartItem.setQuantity(temp);
-				addToCartPage.showMessage("Add Product to Cart Successfully!");
-				addToCartPage.getFrame().dispose();
-				viewManageCartPage(Integer.toString(totalPrice));
 			}
 			
+			int i = 0;
 			for (CartItemModel cartItemModel : cart) {
-				totalPrice += cartItemModel.getQuantity() * priceTemp;
+				totalPrice += cartItemModel.getQuantity() * priceList.elementAt(i);
+				i++;
 			}
 			
-					
+			addToCartPage.showMessage("Add Product to Cart Successfully!");
+			addToCartPage.getFrame().dispose();
+			viewManageCartPage();
 			
-//			manageCartPage = new ManageCartPage();
-//			manageCartPage.setTotalPrice(Integer.toString(totalPrice));
 			
 		}
 	}
 	
-//	public String calculateTotalPrice(int temp, int priceTemp) {
-//		int totalPrice = 0;
-//		totalPrice += temp * priceTemp;
-//		
-//		return Integer.toString(totalPrice);
-//	}
+	public int calculateTotalPrice() {
+		if(cart.isEmpty()) {
+			return 0;
+		}
+		else {
+			return totalPrice;
+		}
+	}
+
 	
 	public void deleteItem(String id, int selectedIndex) {
 		
@@ -131,10 +129,12 @@ public class CartController {
 		}
 		else{
 			int productId = Integer.parseInt(id);
-		
+			
 			for (int i = 0; i < cart.size(); i++) {
 				if(cart.get(i).getProductID() == productId) {
+					totalPrice -= cart.get(i).getQuantity() * priceList.elementAt(i);
 					cart.remove(i);
+					priceList.remove(i);
 					break;
 				}
 			}
@@ -148,6 +148,7 @@ public class CartController {
 	
 	public void clearCartItemList() {
 		cart.clear();
+		priceList.clear();
 		manageCartPage.getFrame().dispose();
 	}
 	

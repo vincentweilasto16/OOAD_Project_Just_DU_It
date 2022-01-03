@@ -12,7 +12,7 @@ public class CartItemModel {
 	public CartItemModel() {
 		
 	}
-	
+
 	public int getProductID() {
 		return productID;
 	}

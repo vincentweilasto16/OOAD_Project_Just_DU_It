@@ -28,11 +28,12 @@ import models.CartItemModel;
 import models.EmployeeModel;
 import models.ProductModel;
 import view.LoginPage;
+import javax.swing.SwingConstants;
 
 public class ManageCartPage implements ActionListener {
 
 	private JFrame frame;
-	private JLabel titleLbl, lblCart, totalPriceLbl;
+	private JLabel titleLbl, lblCart, totalPriceLbl, totalPriceResultLbl;
 	private JButton btnRemove, btnLogout, btnConfirm, btnBack;
 	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
@@ -51,6 +52,8 @@ public class ManageCartPage implements ActionListener {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 13));
+		frame.getContentPane().setEnabled(false);
 		frame.setBounds(100, 100, 800, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -124,13 +127,22 @@ public class ManageCartPage implements ActionListener {
 		scrollPane.setViewportView(table);
 		
 
-		totalPriceTxt = new JTextField("0");
-		totalPriceTxt.setEditable(false);
-		totalPriceTxt.setBounds(634, 449, 116, 22);
-		totalPriceTxt.setText(totalPrice);
-		frame.getContentPane().add(totalPriceTxt);
-		totalPriceTxt.setColumns(10);
+//		totalPriceTxt = new JTextField("0");
+//		totalPriceTxt.setEditable(false);
+//		totalPriceTxt.setBounds(634, 449, 116, 22);
+////		totalPriceTxt.setText(totalPrice);
+//		frame.getContentPane().add(totalPriceTxt);
+//		totalPriceTxt.setColumns(10);
 		
+		
+		int totalPriceNum = CartController.getInstance().calculateTotalPrice();
+		totalPrice = Integer.toString(totalPriceNum);
+		
+		totalPriceResultLbl = new JLabel(totalPrice);
+		totalPriceResultLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		totalPriceResultLbl.setBounds(640, 452, 110, 16);
+		System.out.println(totalPrice);
+		frame.getContentPane().add(totalPriceResultLbl);
 		
 		totalPriceLbl = new JLabel("Total Price");
 		totalPriceLbl.setBounds(561, 452, 67, 16);
@@ -155,11 +167,6 @@ public class ManageCartPage implements ActionListener {
 	
 	public JFrame getFrame() {
 		return frame;
-	}
-	
-	public void setTotalPrice(String totalPrice) {
-		this.totalPrice = totalPrice;
-//		System.out.println(this.totalPrice);
 	}
 	
 	@Override

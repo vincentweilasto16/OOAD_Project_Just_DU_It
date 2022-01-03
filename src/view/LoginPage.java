@@ -103,51 +103,6 @@ public class LoginPage extends JFrame{
 		JOptionPane.showMessageDialog(frame, message);
 	}
 	
-//	void login() {
-//		
-//		
-//		if(username.equals("") || password.equals("")) {
-//			JOptionPane.showMessageDialog(frame, "All field must not be empty!");
-//		}
-//		else {
-//			Connect con = Connect.getInstance();
-//			PreparedStatement ps = con.preparedStatement("SELECT * FROM employee WHERE username = ? AND password = ?");
-//			
-//			try {
-//				ps.setString(1, username);
-//				ps.setString(2, password);
-//				ps.execute();
-//				
-//				ResultSet rs = ps.getResultSet();
-//				
-//				if(rs.next()) {
-//					Main.employee = new EmployeeModel(rs.getInt("id"), rs.getInt("role_id"), rs.getString("name"), rs.getString("username"), rs.getInt("salary"), rs.getString("status"), rs.getString("password"));
-//					if(Main.employee.getRoleId() == 1){
-//						new CashierPage();
-//						this.dispose();
-//					}
-//					else if(Main.employee.getRoleId() == 2){
-//						new ProductManagementPage();
-//						this.dispose();
-//					}
-//					else if(Main.employee.getRoleId() == 3){
-//						new HumanResourceManagementPage();
-//						this.dispose();
-//					}
-//					else if(Main.employee.getRoleId() == 4){
-//						new ManagerPage();
-//						this.dispose();
-//					}
-//				}
-//				else {
-//					JOptionPane.showMessageDialog(this, "Invalid Username or Password!");
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-	
 	void init() {
 		setSize(800, 600);
 		setLocationRelativeTo(null);
