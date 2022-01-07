@@ -44,7 +44,6 @@ public class AddToCartPage implements ActionListener {
 	}
 
 	private void initialize() {
-		System.out.println(Main.employee.getName());
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

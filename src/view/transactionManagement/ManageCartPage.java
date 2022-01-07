@@ -141,7 +141,6 @@ public class ManageCartPage implements ActionListener {
 		totalPriceResultLbl = new JLabel(totalPrice);
 		totalPriceResultLbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		totalPriceResultLbl.setBounds(640, 452, 110, 16);
-		System.out.println(totalPrice);
 		frame.getContentPane().add(totalPriceResultLbl);
 		
 		totalPriceLbl = new JLabel("Total Price");
