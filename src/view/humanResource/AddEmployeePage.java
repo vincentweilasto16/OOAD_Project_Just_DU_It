@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controller.EmployeeController;
-import controller.ProductController;
+import controller.RoleController;
 import models.Role;
 
 import javax.swing.JComboBox;
@@ -32,7 +32,7 @@ public class AddEmployeePage implements ActionListener {
 	private JTextField salaryTxt;
 	private JLabel salaryLbl;
 	private JComboBox<String> roleBox;
-	private Vector<Role> roleType = EmployeeController.getInstance().getAllEmployeeRole();
+	private Vector<Role> roleType = RoleController.getInstance().getAllEmployeeRole();
 
 	public AddEmployeePage() {
 		initialize();

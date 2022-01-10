@@ -60,7 +60,7 @@ public class TransactionReportPage implements ActionListener {
 		
 //		Vector<TransactionModel> transactions = TransactionController.getInstance().getAllTransaction(date);
 		
-		Object [] header = new Object[] {"ID", "Purchase Date", "Employee ID", "Payment Type"};
+		Object [] header = new Object[] {"ID", "Purchase Date", "Employee Name", "Payment Type"};
 		Object [][] data = new Object[][] {
 			
 		};
@@ -86,6 +86,8 @@ public class TransactionReportPage implements ActionListener {
 				for (TransactionItemModel i : item) {
 					Vector<Object> row = new Vector<>();
 					row.add(i.getProductId());
+					row.add(i.getProduct().getName());
+					row.add(i.getProduct().getPrice());
 					row.add(i.getQuantity());	
 					dtmItem.addRow(row);
 				}
@@ -124,10 +126,8 @@ public class TransactionReportPage implements ActionListener {
 		frame.getContentPane().add(btnManageEmployee);
 		
 		//table for item list
-		Object [] headerItem = new Object[] {"Product ID", "Quantity"};
-		Object [][] dataItem = new Object[][] {
-			
-		};
+		Object [] headerItem = new Object[] {"Product ID", "Name", "Price", "Quantity"};
+		Object [][] dataItem = new Object[][] {};
 			
 		dtmItem = new DefaultTableModel(dataItem, headerItem) {
 			@Override
@@ -174,7 +174,7 @@ public class TransactionReportPage implements ActionListener {
 				Vector<Object> row = new Vector<>();
 				row.add(t.getId());
 				row.add(t.getPurchaseDate());
-				row.add(t.getEmployeeId());
+				row.add(t.getEmployee().getName());
 				row.add(t.getPaymentType());
 				dtm.addRow(row);
 			}

@@ -13,9 +13,10 @@ public class TransactionModel {
 	
 
 	private Connect con = Connect.getInstance();
-	private int id, employeeId;
+	private int id;
 	private Date purchaseDate;
 	private String paymentType;
+	private EmployeeModel employee;
 	
 	public int getId() {
 		return id;
@@ -25,13 +26,13 @@ public class TransactionModel {
 		this.id = id;
 	}
 
-	public int getEmployeeId() {
-		return employeeId;
-	}
-
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
-	}
+//	public int getEmployeeId() {
+//		return employeeId;
+//	}
+//
+//	public void setEmployeeId(int employeeId) {
+//		this.employeeId = employeeId;
+//	}
 
 	public Date getPurchaseDate() {
 		return purchaseDate;
@@ -48,13 +49,22 @@ public class TransactionModel {
 	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
 	}
+	
+	public EmployeeModel getEmployee() {
+		return employee;
+	}
 
-	public TransactionModel(int id, int employeeId, Date purchaseDate, String paymentType) {
+	public void setEmployee(EmployeeModel employee) {
+		this.employee = employee;
+	}
+
+	public TransactionModel(int id, int employeeId, int salary, int roleId, String roleName, String name, String username, String status,  Date purchaseDate, String paymentType) {
 		super();
 		this.id = id;
-		this.employeeId = employeeId;
+//		this.employeeId = employeeId;
 		this.purchaseDate = purchaseDate;
 		this.paymentType = paymentType;
+		this.employee = new EmployeeModel(employeeId, salary, roleId, roleName, name, username, status);
 	}
 
 	public TransactionModel() {
@@ -92,8 +102,14 @@ public class TransactionModel {
 			Date purchaseDate = rs.getDate("purchase_date");
 			int employeeId = rs.getInt("employee_id");
 			String paymentType = rs.getString("payment_type");
+			int role = rs.getInt("e.role_id");
+			String name = rs.getString("e.name");
+			String username = rs.getString("username");
+			String status = rs.getString("status");
+			int salary = rs.getInt("salary");
+			String roleName = rs.getString("r.name");
 			
-			return new TransactionModel(id, employeeId, purchaseDate, paymentType);
+			return new TransactionModel(id, employeeId, salary, role, roleName, name, username, status, purchaseDate, paymentType);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -105,7 +121,7 @@ public class TransactionModel {
 		long millis = System.currentTimeMillis();  
 		Date dateNow = new Date(millis);
 
-		String query = "SELECT * FROM transaction WHERE purchase_date = ?";
+		String query = "SELECT * FROM transaction t JOIN employee e ON t.employee_id = e.id JOIN role r ON e.role_id = r.id WHERE purchase_date = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		ResultSet rs = null;
 		
@@ -138,7 +154,7 @@ public class TransactionModel {
 		int month = Integer.parseInt(dateTemp[0]);
 		int year = Integer.parseInt(dateTemp[1]);
 
-		String query = "SELECT * FROM transaction WHERE MONTH(purchase_date) = ? AND YEAR(purchase_date) = ?";
+		String query = "SELECT * FROM transaction t JOIN employee e ON t.employee_id = e.id JOIN role r ON e.role_id = r.id WHERE MONTH(purchase_date) = ? AND YEAR(purchase_date) = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		ResultSet rs = null;
 		

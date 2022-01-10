@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import controller.EmployeeController;
+import controller.RoleController;
 import controller.TransactionController;
 import main.Main;
 import models.EmployeeModel;
@@ -38,7 +39,7 @@ public class ManageEmployeePage implements ActionListener{
 	private JLabel passwordLbl;
 	private JTextField passwordTxt;
 	private JComboBox roleBox;
-	private Vector<Role> roleType = EmployeeController.getInstance().getAllEmployeeRole();
+	private Vector<Role> roleType = RoleController.getInstance().getAllEmployeeRole();
 
 	
 	public ManageEmployeePage() {
@@ -238,8 +239,9 @@ public class ManageEmployeePage implements ActionListener{
 			String name = nameTxt.getText();
 			String salary = salaryTxt.getText();
 		    String password = passwordTxt.getText();
+		    int role = roleType.get(roleBox.getSelectedIndex()).getId();
 			
-			selectedIndex = EmployeeController.getInstance().updateEmployee(selectedIndex, id, name, salary, password);
+			selectedIndex = EmployeeController.getInstance().updateEmployee(selectedIndex, role, id, name, salary, password);
 		}
 		else if(e.getSource().equals(btnFire)) {
 				String id = idTxt.getText();

@@ -65,13 +65,15 @@ public class ManageCartPage implements ActionListener {
 		
 		Vector<CartItemModel> cartItems = CartController.getInstance().getCartList();
 		
-		Object [] header = new Object[] {"ID", "Quantity"};
-		Object [][] data = new Object[cartItems.size()][2];
+		Object [] header = new Object[] {"ID", "Product Name", "Product Price", "Quantity",};
+		Object [][] data = new Object[cartItems.size()][4];
 		
 		
 		for (int i = 0; i < cartItems.size(); i++) {
-			data[i][0] = cartItems.get(i).getProductID();
-			data[i][1] = cartItems.get(i).getQuantity();
+			data[i][0] = cartItems.get(i).getProduct().getId();
+			data[i][1] = cartItems.get(i).getProduct().getName();
+			data[i][2] = cartItems.get(i).getProduct().getPrice();
+			data[i][3] = cartItems.get(i).getQuantity();
 		}
 		
 			

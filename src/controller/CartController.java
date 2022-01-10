@@ -3,6 +3,7 @@ package controller;
 import java.util.Vector;
 
 import models.CartItemModel;
+import models.ProductModel;
 import view.transactionManagement.AddToCartPage;
 import view.transactionManagement.ManageCartPage;
 
@@ -91,7 +92,9 @@ public class CartController {
 			}
 			
 			if(count == 2) {
-				CartItemModel cartItemModel = new CartItemModel(productId, quantityTemp);
+				ProductModel product = new ProductModel();
+				product = ProductController.getInstance().getProduct(productId);
+				CartItemModel cartItemModel = new CartItemModel(productId, quantityTemp, product.getPrice(), product.getStock(), product.getName(), product.getDescription());
 				cart.add(cartItemModel);
 			}
 			else if(count == 3) {

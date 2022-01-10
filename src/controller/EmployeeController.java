@@ -94,38 +94,9 @@ public class EmployeeController {
 
 	}
 	
-	public Vector<Role> getAllEmployeeRole(){
-		Role roleModel = new Role();
-		return roleModel.getAllRole();
-	}
-	
 	public void addEmployee(int roleId, String name, String username, String salary) {
 		int count = 0;
 		int salaryTemp;
-		
-//		if(role.equals("")) {
-//			addEmployeePage.showMessage("Role must not empty");
-//			return;
-//		}
-//		else {
-//			count++;
-//			 try {
-//			        roleId = Integer.parseInt(role);
-//			        count++;
-//	
-//			    } catch (Exception e) {
-//			    	addEmployeePage.showMessage("role must be numeric");
-//			    	return;
-//			    }
-//			 
-//				if(roleId < 1 || roleId > 4) {
-//					addEmployeePage.showMessage("role not exists, Please input between 1 and 4!");
-//					return;
-//				}
-//				else {
-//					count++;
-//				}
-//		}
 		
 		if(name.equals("")) {
 			addEmployeePage.showMessage("Name must not empty");
@@ -195,7 +166,7 @@ public class EmployeeController {
 		}
 	}
 	
-	public int updateEmployee(int selectedIndex, String id, String name, String salary, String password) {
+	public int updateEmployee(int selectedIndex, int role, String id, String name, String salary, String password) {
 		
 		if(selectedIndex == -1) {
 			manageEmployeePage.showManageProductPageMessage("Nothing updated!");
@@ -240,7 +211,7 @@ public class EmployeeController {
 			
 			if(count == 5) {
 				EmployeeModel employeeModel = new EmployeeModel();
-				employeeModel.updateEmployee(employeeId, name, salaryTemp, password);
+				employeeModel.updateEmployee(employeeId, role, name, salaryTemp, password);
 				manageEmployeePage.showManageProductPageMessage("Employee Has Been Updated Successfully!");
 				manageEmployeePage.getFrame().dispose();
 				viewManageEmployeePage();

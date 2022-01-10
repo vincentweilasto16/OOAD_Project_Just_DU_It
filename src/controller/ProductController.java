@@ -212,6 +212,11 @@ public class ProductController {
 
 	}
 	
+	public ProductModel getProduct(int id) {
+		ProductModel productModel = new ProductModel();
+		return productModel.getProduct(id);
+	}
+	
 	public void reduceProductStock(Integer id, Integer stock) {
 		ProductModel productModel = new ProductModel();
 		productModel = productModel.getProduct(id);

@@ -18,7 +18,7 @@ public class EmployeeModel {
 		
 	}
 	
-	public EmployeeModel(int id, int salary, int roleId, String roleName ,String name, String username, String status) {
+	public EmployeeModel(int id, int salary, int roleId, String roleName, String name, String username, String status) {
 		super();
 		this.id = id;
 		this.salary = salary;
@@ -176,15 +176,16 @@ public class EmployeeModel {
 		}
 	}
 	
-	public void updateEmployee(int employeeId, String name, int salary, String password) {
-		String query = "UPDATE employee SET name = ?, salary = ?, password = ? WHERE id = ?";
+	public void updateEmployee(int employeeId, int role, String name, int salary, String password) {
+		String query = "UPDATE employee SET name = ?, role_id = ?, salary = ?, password = ? WHERE id = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		
 		try {
 			ps.setString(1, name);
-			ps.setInt(2, salary);
-			ps.setString(3, password);
-			ps.setInt(4, employeeId);
+			ps.setInt(2, role);
+			ps.setInt(3, salary);
+			ps.setString(4, password);
+			ps.setInt(5, employeeId);
 			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -13,17 +13,19 @@ public class TransactionItemModel {
 	private int transactionId;
 	private int productId;
 	private int quantity;
+	private ProductModel product;
 	private Connect con = Connect.getInstance();
 
 	public TransactionItemModel() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TransactionItemModel(int transactionId, int productId, int quantity) {
+	public TransactionItemModel(int transactionId, int productId, int quantity, int price, int stock, String name, String description) {
 		super();
 		this.transactionId = transactionId;
 		this.productId = productId;
 		this.quantity = quantity;
+		this.product = new ProductModel(productId, price, stock, name, description);
 	}
 
 	public int getTransactionId() {
@@ -49,6 +51,13 @@ public class TransactionItemModel {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public ProductModel getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductModel product) {
+		this.product = product;
+	}
 
 	public void addTransactionItem(Integer transactionId, Integer productId, Integer quantity) {
 		
@@ -72,8 +81,12 @@ public class TransactionItemModel {
 			int transactionId = rs.getInt("transaction_id");
 			int productId = rs.getInt("product_id");
 			int quantity = rs.getInt("quantity");
+			String name = rs.getString("name");
+			int price = rs.getInt("price");
+			int stock = rs.getInt("stock");
+			String description = rs.getString("description");
 			
-			return new TransactionItemModel(transactionId, productId, quantity);
+			return new TransactionItemModel(transactionId, productId, quantity, price, stock, name, description);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +95,7 @@ public class TransactionItemModel {
 	
 	public Vector<TransactionItemModel> getTransactionReport(int id) {
 		
-		String query = "SELECT * FROM transactionitem WHERE transaction_id = ?";
+		String query = "SELECT * FROM transactionitem ti JOIN product p ON ti.product_id = p.id WHERE transaction_id = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		ResultSet rs = null;
 		
