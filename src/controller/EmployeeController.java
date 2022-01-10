@@ -7,6 +7,7 @@ import java.util.Vector;
 import main.Main;
 import models.EmployeeModel;
 import models.ProductModel;
+import models.Role;
 import view.LoginPage;
 import view.humanResource.AddEmployeePage;
 import view.humanResource.ManageEmployeePage;
@@ -93,34 +94,38 @@ public class EmployeeController {
 
 	}
 	
-	public void addEmployee(String role, String name, String username, String salary) {
+	public Vector<Role> getAllEmployeeRole(){
+		Role roleModel = new Role();
+		return roleModel.getAllRole();
+	}
+	
+	public void addEmployee(int roleId, String name, String username, String salary) {
 		int count = 0;
-		int roleId = 0;
 		int salaryTemp;
 		
-		if(role.equals("")) {
-			addEmployeePage.showMessage("Role must not empty");
-			return;
-		}
-		else {
-			count++;
-			 try {
-			        roleId = Integer.parseInt(role);
-			        count++;
-	
-			    } catch (Exception e) {
-			    	addEmployeePage.showMessage("role must be numeric");
-			    	return;
-			    }
-			 
-				if(roleId < 1 || roleId > 4) {
-					addEmployeePage.showMessage("role not exists, Please input between 1 and 4!");
-					return;
-				}
-				else {
-					count++;
-				}
-		}
+//		if(role.equals("")) {
+//			addEmployeePage.showMessage("Role must not empty");
+//			return;
+//		}
+//		else {
+//			count++;
+//			 try {
+//			        roleId = Integer.parseInt(role);
+//			        count++;
+//	
+//			    } catch (Exception e) {
+//			    	addEmployeePage.showMessage("role must be numeric");
+//			    	return;
+//			    }
+//			 
+//				if(roleId < 1 || roleId > 4) {
+//					addEmployeePage.showMessage("role not exists, Please input between 1 and 4!");
+//					return;
+//				}
+//				else {
+//					count++;
+//				}
+//		}
 		
 		if(name.equals("")) {
 			addEmployeePage.showMessage("Name must not empty");
@@ -162,7 +167,7 @@ public class EmployeeController {
 				}
 		}
 		
-		if(count == 8) {
+		if(count == 5) {
 			EmployeeModel employeeModel = new EmployeeModel();
 			employeeModel.insertEmployee(roleId, name, username, salaryTemp);
 			addEmployeePage.showMessage("Add new Employee Successfully!");

@@ -12,12 +12,13 @@ public class EmployeeModel {
 	private Connect con = Connect.getInstance();
 	private int id, roleId, salary;
 	private String name, username, status, password;
+	private Role roleModel;
 
 	public EmployeeModel() {
 		
 	}
 	
-	public EmployeeModel(int id, int salary, int roleId, String name, String username, String status) {
+	public EmployeeModel(int id, int salary, int roleId, String roleName ,String name, String username, String status) {
 		super();
 		this.id = id;
 		this.salary = salary;
@@ -25,6 +26,7 @@ public class EmployeeModel {
 		this.name = name;
 		this.username = username;
 		this.status = status;
+		this.roleModel = new Role(roleId, roleName);
 	}
 
 	public int getId() {
@@ -84,7 +86,7 @@ public class EmployeeModel {
 	}
 	
 	public EmployeeModel getEmployee(String username, String password) {
-		String query = "SELECT * FROM employee WHERE username = ? AND password = ?";
+		String query = "SELECT * FROM employee e JOIN role r ON e.role_id = r.id WHERE username = ? AND password = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		ResultSet rs = null;
 		
@@ -110,12 +112,13 @@ public class EmployeeModel {
 		try {
 			int id = rs.getInt("id");
 			int role = rs.getInt("role_id");
-			String name = rs.getString("name");
+			String name = rs.getString("e.name");
 			String username = rs.getString("username");
 			String status = rs.getString("status");
 			int salary = rs.getInt("salary");
+			String roleName = rs.getString("r.name");
 			
-			return new EmployeeModel(id, salary, role, name, username, status);
+			return new EmployeeModel(id, salary, role, roleName, name, username, status);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -124,23 +127,21 @@ public class EmployeeModel {
 
 	public Vector<EmployeeModel> getAllEmployee() {
 
-		String query = "SELECT * FROM employee";
+		String query = "SELECT * FROM employee e JOIN role r ON e.role_id = r.id";
 		ResultSet rs = con.executeQuery(query);
 		
 		Vector<EmployeeModel> employees = new Vector<>();
 		
 		try {
 			while(rs.next()) {
-				EmployeeModel employee = map(rs);
-				employees.add(employee);
+				employees.add(map(rs));	
 			}
-
-			return employees;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return employees;
 	}
 	
 	public void insertEmployee(Integer role, String name, String username, Integer salary) {
@@ -188,6 +189,14 @@ public class EmployeeModel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Role getRoleModel() {
+		return roleModel;
+	}
+
+	public void setRoleModel(Role roleModel) {
+		this.roleModel = roleModel;
 	}
 	
 	

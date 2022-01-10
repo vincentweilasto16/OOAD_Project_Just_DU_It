@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,18 +17,22 @@ import javax.swing.border.EmptyBorder;
 
 import controller.EmployeeController;
 import controller.ProductController;
+import models.Role;
+
+import javax.swing.JComboBox;
 
 public class AddEmployeePage implements ActionListener {
 
 	private JPanel contentPane;
 	private JFrame frame;
-	private JTextField roleTxt;
 	private JLabel titleLbl, roleLbl, nameLbl, usernameLbl;
-	JButton btnBack, btnAdd;
+	private JButton btnBack, btnAdd;
 	private JTextField nameTxt;
 	private JTextField usernameTxt;
 	private JTextField salaryTxt;
 	private JLabel salaryLbl;
+	private JComboBox<String> roleBox;
+	private Vector<Role> roleType = EmployeeController.getInstance().getAllEmployeeRole();
 
 	public AddEmployeePage() {
 		initialize();
@@ -49,11 +54,6 @@ public class AddEmployeePage implements ActionListener {
 		roleLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		roleLbl.setBounds(82, 195, 56, 21);
 		frame.getContentPane().add(roleLbl);
-		
-		roleTxt = new JTextField();
-		roleTxt.setBounds(208, 190, 211, 33);
-		frame.getContentPane().add(roleTxt);
-		roleTxt.setColumns(10);
 		
 		nameLbl = new JLabel("Name");
 		nameLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -94,6 +94,17 @@ public class AddEmployeePage implements ActionListener {
 		salaryLbl.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		salaryLbl.setBounds(82, 364, 56, 21);
 		frame.getContentPane().add(salaryLbl);
+		
+		Vector<String> typeName = new Vector<>();
+		
+		for (Role r : roleType) {
+			typeName.add(r.getName());
+		}
+		
+		
+		roleBox = new JComboBox<>(typeName);
+		roleBox.setBounds(208, 192, 211, 29);
+		frame.getContentPane().add(roleBox);
 	}
 	
 	public void showMessage(String message) {
@@ -111,15 +122,13 @@ public class AddEmployeePage implements ActionListener {
 			frame.dispose();
 		}
 		else if(e.getSource().equals(btnAdd)) {
-			String role = roleTxt.getText();
+			int role = roleType.get(roleBox.getSelectedIndex()).getId();
 			String name = nameTxt.getText();
 			String username = usernameTxt.getText();
 			String salary = salaryTxt.getText();
 			
 			EmployeeController.getInstance().addEmployee(role, name, username, salary);
-//			frame.dispose();
+			frame.dispose();
 		}
 	}
-	
-
 }
