@@ -11,9 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.CartController;
 import controller.EmployeeController;
-import controller.ProductController;
 import controller.TransactionController;
-import models.ProductModel;
 import models.TransactionItemModel;
 import models.TransactionModel;
 
@@ -91,7 +89,7 @@ public class TodayTransactionHistoryPage implements ActionListener {
 				dtmItem.setRowCount(0);	
 				for (TransactionItemModel i : item) {
 					Vector<Object> row = new Vector<>();
-					row.add(i.getProductId());
+					row.add(i.getProduct().getId());
 					row.add(i.getProduct().getName());
 					row.add(i.getProduct().getPrice());
 					row.add(i.getQuantity());	

@@ -9,17 +9,13 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import controller.EmployeeController;
 import controller.ProductController;
 import models.ProductModel;
-import view.LoginPage;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 

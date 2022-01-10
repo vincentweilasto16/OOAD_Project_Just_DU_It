@@ -40,8 +40,8 @@ public class TransactionController {
 
 		Vector<CartItemModel> cartItems = CartController.getInstance().getCartList();
 		for (CartItemModel cartItemModel : cartItems) {
-			ProductController.getInstance().reduceProductStock(cartItemModel.getProductID(), cartItemModel.getQuantity());
-			addTransactionItem(transactionId, cartItemModel.getProductID(), cartItemModel.getQuantity());
+			ProductController.getInstance().reduceProductStock(cartItemModel.getProduct().getId(), cartItemModel.getQuantity());
+			addTransactionItem(transactionId, cartItemModel.getProduct().getId(), cartItemModel.getQuantity());
 		}
 		CartController.getInstance().clearCartItemList();
 		viewTodayTransactionHistoryPage();

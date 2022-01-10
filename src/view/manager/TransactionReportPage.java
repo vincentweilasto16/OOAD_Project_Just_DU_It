@@ -27,7 +27,7 @@ import java.util.Calendar;
 public class TransactionReportPage implements ActionListener {
 
 	private JFrame frame;
-	private JLabel titleLbls, titleLbl, dateLabel, lblDetailTransaction;
+	private JLabel titleLbl, dateLabel, lblDetailTransaction;
 	private JButton btnSearch, btnLogout, btnManageEmployee;
 	private DefaultTableModel dtm, dtmItem;
 	private JSpinner date;
@@ -85,7 +85,7 @@ public class TransactionReportPage implements ActionListener {
 				dtmItem.setRowCount(0);	
 				for (TransactionItemModel i : item) {
 					Vector<Object> row = new Vector<>();
-					row.add(i.getProductId());
+					row.add(i.getProduct().getId());
 					row.add(i.getProduct().getName());
 					row.add(i.getProduct().getPrice());
 					row.add(i.getQuantity());	

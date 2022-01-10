@@ -10,7 +10,7 @@ import connect.Connect;
 public class EmployeeModel {
 	
 	private Connect con = Connect.getInstance();
-	private int id, roleId, salary;
+	private int id, salary;
 	private String name, username, status, password;
 	private Role roleModel;
 
@@ -22,7 +22,6 @@ public class EmployeeModel {
 		super();
 		this.id = id;
 		this.salary = salary;
-		this.roleId = roleId;
 		this.name = name;
 		this.username = username;
 		this.status = status;
@@ -43,14 +42,6 @@ public class EmployeeModel {
 
 	public void setSalary(int salary) {
 		this.salary = salary;
-	}
-
-	public int getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
 	}
 
 	public String getName() {
@@ -176,16 +167,15 @@ public class EmployeeModel {
 		}
 	}
 	
-	public void updateEmployee(int employeeId, int role, String name, int salary, String password) {
-		String query = "UPDATE employee SET name = ?, role_id = ?, salary = ?, password = ? WHERE id = ?";
+	public void updateEmployee(int employeeId, String name, int salary, String password) {
+		String query = "UPDATE employee SET name = ?, salary = ?, password = ? WHERE id = ?";
 		PreparedStatement ps = con.preparedStatement(query);
 		
 		try {
 			ps.setString(1, name);
-			ps.setInt(2, role);
-			ps.setInt(3, salary);
-			ps.setString(4, password);
-			ps.setInt(5, employeeId);
+			ps.setInt(2, salary);
+			ps.setString(3, password);
+			ps.setInt(4, employeeId);
 			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

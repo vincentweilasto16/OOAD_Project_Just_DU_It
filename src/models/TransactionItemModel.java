@@ -1,6 +1,5 @@
 package models;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import connect.Connect;
 public class TransactionItemModel {
 	
 	private int transactionId;
-	private int productId;
 	private int quantity;
 	private ProductModel product;
 	private Connect con = Connect.getInstance();
@@ -23,7 +21,6 @@ public class TransactionItemModel {
 	public TransactionItemModel(int transactionId, int productId, int quantity, int price, int stock, String name, String description) {
 		super();
 		this.transactionId = transactionId;
-		this.productId = productId;
 		this.quantity = quantity;
 		this.product = new ProductModel(productId, price, stock, name, description);
 	}
@@ -34,14 +31,6 @@ public class TransactionItemModel {
 
 	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
 	}
 
 	public int getQuantity() {

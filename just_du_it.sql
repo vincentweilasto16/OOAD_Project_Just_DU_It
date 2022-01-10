@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2021 at 04:00 PM
+-- Generation Time: Jan 10, 2022 at 11:30 AM
 -- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.7
+-- PHP Version: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,17 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `just_du_it`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cartitem`
---
-
-CREATE TABLE `cartitem` (
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -53,7 +42,11 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `role_id`, `name`, `username`, `salary`, `status`, `password`) VALUES
-(1, 2, 'Budi Wan', 'budiwan', 20, 'Active', 'budiwan123');
+(1, 1, 'Budi Wan', 'a', 20, 'Active', 'a'),
+(2, 4, 'b', 'b', 1200, 'Active', 'b'),
+(6, 3, 'c', 'c', 3444, 'Active', 'c'),
+(7, 1, 'ameng', 'ameng', 3334, 'Active', 'ameng'),
+(8, 2, 'tono', 'tono', 2334, 'Active', 'tono');
 
 -- --------------------------------------------------------
 
@@ -74,10 +67,11 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `description`, `price`, `stock`) VALUES
-(1, 'Indomilk rasa cokelat', 'Susu berkualitas rasa cokelat', 5500, 20),
-(2, 'Sukro', 'Kacang dengan olahan yang profesional dan merupakan kacang terbaik di dunia', 7000, 50),
-(3, 'Sugar', 'Pilihan Permen terbaik di dunia', 12000, 35),
-(4, 'bubur sumsum', 'Bubur terbaik di dunia', 20000, 20000);
+(1, 'Indomilk rasa cokelat', 'Susu berkualitas rasa cokelat', 5500, 15),
+(2, 'Sukro', 'Kacang dengan olahan yang profesional dan merupakan kacang terbaik di dunia', 7000, 37),
+(3, 'Sugar', 'Pilihan Permen terbaik di dunia', 12000, 32),
+(4, 'bubur sumsum', 'Bubur terbaik di dunia', 20000, 50),
+(5, 'kacang', 'kacang goreng', 3500, 12);
 
 -- --------------------------------------------------------
 
@@ -113,6 +107,17 @@ CREATE TABLE `transaction` (
   `payment_type` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`id`, `purchase_date`, `employee_id`, `payment_type`) VALUES
+(1, '2022-01-01', 1, 'Cash'),
+(2, '2021-03-16', 1, 'Cash'),
+(3, '2022-01-01', 1, 'Cash'),
+(4, '2022-01-01', 1, 'Credit'),
+(5, '2022-01-10', 1, 'Cash');
+
 -- --------------------------------------------------------
 
 --
@@ -126,14 +131,22 @@ CREATE TABLE `transactionitem` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `transactionitem`
 --
 
+INSERT INTO `transactionitem` (`transaction_id`, `product_id`, `quantity`) VALUES
+(1, 4, 3),
+(2, 1, 20),
+(3, 2, 2),
+(4, 3, 3),
+(4, 2, 8),
+(4, 4, 7),
+(5, 4, 7),
+(5, 2, 3);
+
 --
--- Indexes for table `cartitem`
+-- Indexes for dumped tables
 --
-ALTER TABLE `cartitem`
-  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `employee`
@@ -176,13 +189,13 @@ ALTER TABLE `transactionitem`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -194,17 +207,11 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `cartitem`
---
-ALTER TABLE `cartitem`
-  ADD CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `employee`

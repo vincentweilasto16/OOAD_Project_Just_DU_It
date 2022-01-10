@@ -26,14 +26,6 @@ public class TransactionModel {
 		this.id = id;
 	}
 
-//	public int getEmployeeId() {
-//		return employeeId;
-//	}
-//
-//	public void setEmployeeId(int employeeId) {
-//		this.employeeId = employeeId;
-//	}
-
 	public Date getPurchaseDate() {
 		return purchaseDate;
 	}

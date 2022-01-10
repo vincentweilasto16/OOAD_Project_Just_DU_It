@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,21 +14,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import controller.EmployeeController;
-import controller.RoleController;
 import controller.TransactionController;
 import main.Main;
 import models.EmployeeModel;
-import models.Role;
-import view.LoginPage;
-import javax.swing.JComboBox;
 
 public class ManageEmployeePage implements ActionListener{
 
 	private JFrame frame;
-	private JLabel titleLbl, idLbl, roleLbl, nameLbl, usernameLbl, statusLbl;
-	private JTextField idTxt, nameTxt, usernameTxt, statusTxt;
+	private JLabel titleLbl, idLbl, roleLbl, nameLbl, usernameLbl, statusLbl, lblSalary;
+	private JTextField idTxt, nameTxt, usernameTxt, statusTxt,  roleTxt;
 	private JButton btnUpdate, btnFire, btnAddEmployee, btnLogout, btnBack;
 	private DefaultTableModel dtm;
 	private JScrollPane scrollPane;
@@ -38,8 +32,7 @@ public class ManageEmployeePage implements ActionListener{
 	private JTextField salaryTxt;
 	private JLabel passwordLbl;
 	private JTextField passwordTxt;
-	private JComboBox roleBox;
-	private Vector<Role> roleType = RoleController.getInstance().getAllEmployeeRole();
+
 
 	
 	public ManageEmployeePage() {
@@ -96,20 +89,12 @@ public class ManageEmployeePage implements ActionListener{
 				String salary = dtm.getValueAt(selectedIndex, 5).toString();
 				
 				idTxt.setText(id);
+				roleTxt.setText(role);
 				nameTxt.setText(name);
 				usernameTxt.setText(username);
 				statusTxt.setText(status);
 				salaryTxt.setText(salary);
 				
-				int selectedRole=-1;
-				for(int i=0; i<roleType.size(); i++) {
-					if(roleType.get(i).getName().equals(role)) {
-						selectedRole = i;
-						break;
-					}
-				}
-				
-				roleBox.setSelectedIndex(selectedRole);
 			}
 		});
 
@@ -180,7 +165,7 @@ public class ManageEmployeePage implements ActionListener{
 		scrollPane.setBounds(47, 91, 703, 221);
 		frame.getContentPane().add(scrollPane);
 		
-		JLabel lblSalary = new JLabel("Salary");
+		lblSalary = new JLabel("Salary");
 		lblSalary.setBounds(436, 440, 57, 25);
 		frame.getContentPane().add(lblSalary);
 		
@@ -200,17 +185,13 @@ public class ManageEmployeePage implements ActionListener{
 	
 		scrollPane.setViewportView(table);
 		
-		Vector<String> typeName = new Vector<>();
+		roleTxt = new JTextField();
+		roleTxt.setEditable(false);
+		roleTxt.setColumns(10);
+		roleTxt.setBounds(128, 405, 222, 30);
+		frame.getContentPane().add(roleTxt);
 		
-		for (Role r : roleType) {
-			typeName.add(r.getName());
-		}
-		
-		roleBox = new JComboBox<>(typeName);
-		roleBox.setBounds(128, 400, 222, 29);
-		frame.getContentPane().add(roleBox);
-		
-		if(Main.employee.getRoleId() == 4) {
+		if(Main.employee.getRoleModel().getId() == 4) {
 			btnBack = new JButton("Back");
 			btnBack.setBounds(12, 13, 66, 25);
 			btnBack.addActionListener(this);
@@ -239,9 +220,8 @@ public class ManageEmployeePage implements ActionListener{
 			String name = nameTxt.getText();
 			String salary = salaryTxt.getText();
 		    String password = passwordTxt.getText();
-		    int role = roleType.get(roleBox.getSelectedIndex()).getId();
 			
-			selectedIndex = EmployeeController.getInstance().updateEmployee(selectedIndex, role, id, name, salary, password);
+			selectedIndex = EmployeeController.getInstance().updateEmployee(selectedIndex, id, name, salary, password);
 		}
 		else if(e.getSource().equals(btnFire)) {
 				String id = idTxt.getText();

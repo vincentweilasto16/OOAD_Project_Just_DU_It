@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,10 +20,7 @@ import controller.CartController;
 import controller.EmployeeController;
 import controller.ProductController;
 import controller.TransactionController;
-import main.Main;
-import models.EmployeeModel;
 import models.ProductModel;
-import view.LoginPage;
 
 public class AddToCartPage implements ActionListener {
 

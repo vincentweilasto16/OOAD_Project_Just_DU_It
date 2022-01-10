@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Vector;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -16,18 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import controller.CartController;
 import controller.EmployeeController;
-import controller.ProductController;
 import controller.TransactionController;
 import main.Main;
 import models.CartItemModel;
-import models.EmployeeModel;
-import models.ProductModel;
-import view.LoginPage;
 import javax.swing.SwingConstants;
 
 public class ManageCartPage implements ActionListener {
@@ -40,7 +32,6 @@ public class ManageCartPage implements ActionListener {
 	private JTable table;
 	private int selectedIndex = -1;
 	private String id;
-	private JTextField totalPriceTxt;
 	private String totalPrice;
 	private JComboBox<String> paymentType;
 	private JLabel paymentTypeLbl;

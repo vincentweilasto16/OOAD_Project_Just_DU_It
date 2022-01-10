@@ -1,20 +1,12 @@
 package controller;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Vector;
 
 import main.Main;
 import models.EmployeeModel;
-import models.ProductModel;
-import models.Role;
 import view.LoginPage;
 import view.humanResource.AddEmployeePage;
 import view.humanResource.ManageEmployeePage;
-import view.productManagement.AddProductPage;
-import view.productManagement.ManageProductPage;
-import view.transactionManagement.ManageCartPage;
-import view.transactionManagement.AddToCartPage;
 
 public class EmployeeController {
 	
@@ -63,8 +55,8 @@ public class EmployeeController {
 			Main.employee = employeeModel.getEmployee(username, password);
 			int roleId = 0;
 
-			if(Main.employee != null) {
-				roleId = Main.employee.getRoleId();
+			if(Main.employee != null && Main.employee.getStatus().equals("Active")) {
+				roleId = Main.employee.getRoleModel().getId();
 				if(roleId == 1){
 					CartController.getInstance().viewAddToCartPage();
 				}
@@ -166,7 +158,7 @@ public class EmployeeController {
 		}
 	}
 	
-	public int updateEmployee(int selectedIndex, int role, String id, String name, String salary, String password) {
+	public int updateEmployee(int selectedIndex, String id, String name, String salary, String password) {
 		
 		if(selectedIndex == -1) {
 			manageEmployeePage.showManageProductPageMessage("Nothing updated!");
@@ -211,7 +203,7 @@ public class EmployeeController {
 			
 			if(count == 5) {
 				EmployeeModel employeeModel = new EmployeeModel();
-				employeeModel.updateEmployee(employeeId, role, name, salaryTemp, password);
+				employeeModel.updateEmployee(employeeId, name, salaryTemp, password);
 				manageEmployeePage.showManageProductPageMessage("Employee Has Been Updated Successfully!");
 				manageEmployeePage.getFrame().dispose();
 				viewManageEmployeePage();

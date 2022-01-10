@@ -58,7 +58,7 @@ public class CartController {
 			CartItemModel cartItem = new CartItemModel();
 			
 			for (CartItemModel cartItemModel : cart) {
-				if(cartItemModel.getProductID() == productId) {
+				if(cartItemModel.getProduct().getId() == productId) {
 					cartItem = cartItemModel;
 					count++;
 					break;
@@ -134,7 +134,7 @@ public class CartController {
 			int productId = Integer.parseInt(id);
 			
 			for (int i = 0; i < cart.size(); i++) {
-				if(cart.get(i).getProductID() == productId) {
+				if(cart.get(i).getProduct().getId() == productId) {
 					totalPrice -= cart.get(i).getQuantity() * priceList.elementAt(i);
 					cart.remove(i);
 					priceList.remove(i);
